@@ -2,12 +2,28 @@
 ** Home
 */
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import BlogCard from '../components/blog-card'
+import db from '../firebase.config';
 
 const Home = () => {
 
-    const [allBlogs, setAllBlogs] = useState([ { _id: 1 }, { _id: 2 }, { _id: 3 }, { _id: 4 }, { _id: 5 }, { _id: 6 }, { _id: 7 }, { _id: 8 }, ]);
+    const [allBlogs, setAllBlogs] = useState([]);
+    
+    useEffect(() => {
+        fetchBlogs();
+    }, []);
+
+    // Fetch All blogs
+    const fetchBlogs = async () => {
+        const response = db.collection('blogs');
+        const data = await response.get();
+        let allBlogsData = [];
+        data.forEach(doc => {
+            allBlogsData.push({...doc.data(), _id: doc?.id})
+        });     
+        setAllBlogs(allBlogsData);
+    }
 
     return (
         <React.Fragment>
@@ -21,7 +37,7 @@ const Home = () => {
                         {
                             allBlogs?.map(blog => {
                                 return <div className="column is-3" key={blog?._id}>
-                                    <BlogCard blog={blog}/>
+                                    <BlogCard blogData={blog}/>
                                 </div>
                             })
                         }
