@@ -3,8 +3,8 @@
 */
 import React from 'react';
 
-const BlogCard = (props) => {
-    console.log(props?.blogData)
+const BlogCard = (props) => { 
+    
     return (
         <React.Fragment>
             <div className="card">
@@ -28,7 +28,7 @@ const BlogCard = (props) => {
                     <div className="content">
                         <h3 className="is-size-5 ellipsis is-ellipsis-1">{ props?.blogData?.title }</h3>
                         <p className="ellipsis is-ellipsis-2">{ props?.blogData?.content }</p>                    
-                        <p className="title is-7">11:09 PM - 1 Jan 2016</p>
+                        <p className="title is-7">{ props?.blogData?.date.toDate().toDateString() }</p>
                     </div>
                 </div>
             </div>

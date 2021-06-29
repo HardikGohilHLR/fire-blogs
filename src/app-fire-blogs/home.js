@@ -20,7 +20,7 @@ const Home = () => {
         const data = await response.get();
         let allBlogsData = [];
         data.forEach(doc => {
-            allBlogsData.push({...doc.data(), _id: doc?.id})
+            allBlogsData.push({...doc.data(), _id: doc?.id});
         });     
         setAllBlogs(allBlogsData);
     }

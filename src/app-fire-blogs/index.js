@@ -17,7 +17,7 @@ const FireBlogs = () => {
                 <Navbar/>
 
                 <Switch>
-                    <div className="container py-5">
+                    <div className="container px-4 py-5">
                         <Route exact path="/" component={Home} />  
                         <Route exact path="/about" component={About} />  
                     </div>
