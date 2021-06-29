@@ -1,6 +1,11 @@
+/*
+** Main Component
+*/
+
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-  
+
+// Components
 import Navbar from "../components/navbar";
 import Home from './home';
 import About from './about';
@@ -10,10 +15,12 @@ const FireBlogs = () => {
         <React.Fragment>
             <Router>
                 <Navbar/>
-                
+
                 <Switch>
-                    <Route exact path="/" component={Home} />  
-                    <Route exact path="/about" component={About} />  
+                    <div className="container py-5">
+                        <Route exact path="/" component={Home} />  
+                        <Route exact path="/about" component={About} />  
+                    </div>
                 </Switch>
 
             </Router>
