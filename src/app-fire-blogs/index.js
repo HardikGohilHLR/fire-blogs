@@ -9,6 +9,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "../components/navbar";
 import Home from './home';
 import About from './about';
+import Login from './auth/login';
+import Signup from './auth/signup';
 
 const FireBlogs = () => {
 	return (
@@ -20,6 +22,8 @@ const FireBlogs = () => {
                     <div className="container px-4 py-5">
                         <Route exact path="/" component={Home} />  
                         <Route exact path="/about" component={About} />  
+                        <Route exact path="/login" component={Login} />  
+                        <Route exact path="/create-account" component={Signup} />  
                     </div>
                 </Switch>
 

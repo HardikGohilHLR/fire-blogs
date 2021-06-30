@@ -23,8 +23,8 @@ const Navbar = () => {
                         <div className="navbar-end">
                             <div className="navbar-item">
                                 <div className="buttons">
-                                    <NavLink to={'/sign-up'} className="button is-dark"><strong>Sign up</strong></NavLink>
-                                    <NavLink to={'/log-in'} className="button is-light">Log in</NavLink>
+                                    <NavLink to={'/create-account'} className="button is-dark"><strong>Sign up</strong></NavLink>
+                                    <NavLink to={'/login'} className="button is-light">Log in</NavLink>
                                 </div>
                             </div>
                         </div>
