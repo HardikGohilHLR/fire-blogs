@@ -1,5 +1,5 @@
 /*
-** Home
+** Create Account
 */
 
 import React, { useEffect, useRef, useState } from 'react';
@@ -17,8 +17,7 @@ const Signup = () => {
     const [fieldValues, setFieldValues] = useState({
         username: '',
         email: '',
-        password: '',
-        cPassword: '', 
+        password: '', 
     });
 
     const handle = {
