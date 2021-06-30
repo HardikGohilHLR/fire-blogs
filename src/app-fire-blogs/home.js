@@ -4,10 +4,10 @@
 
 import React, { useState, useEffect } from 'react'
 import BlogCard from '../components/blog-card'
-import db from '../firebase.config';
+import fire from '../firebase.config';
 
 const Home = () => {
-
+    const db = fire.firestore();
     const [allBlogs, setAllBlogs] = useState([]);
     
     useEffect(() => {

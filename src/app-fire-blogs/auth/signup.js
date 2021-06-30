@@ -2,14 +2,16 @@
 ** Create Account
 */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useForceUpdate } from '../../common/hooks/useForceUpdate';
+import { useForceUpdate } from '../../common/hooks/useForceUpdate'; 
+import fire from '../../firebase.config';
 
 // Packages
 import Validator from 'simple-react-validator';
 
 const Signup = () => { 
+    const auth = fire.auth();
     const forceUpdate = useForceUpdate();
 
     const validator = useRef(new Validator({ autoForceUpdate: {forceUpdate} }));
@@ -27,9 +29,9 @@ const Signup = () => {
     }
 
     const submitForm = () => { 
-        if (validator?.current?.allValid()) {
-            alert('You submitted the form and stuff!'); 
-        } else {
+        if (validator?.current?.allValid()) { 
+
+        } else { 
             validator?.current?.showMessages();
             console.log(validator?.current);
         }

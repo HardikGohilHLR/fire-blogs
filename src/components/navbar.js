@@ -2,10 +2,31 @@
 ** Navbar
 */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from "react-router-dom";
 
+import fire from '../firebase.config';
+
 const Navbar = () => {
+    const auth = fire.auth();
+
+    const [user, setUser] = useState('');
+
+    useEffect(() => {
+        getUser();
+    }, []);
+
+    const getUser = () => {
+        const user = auth?.currentUser;
+        setUser(user?.email); 
+    }
+
+    const logout = () => {
+        auth.signOut();
+        setUser(''); 
+        console.log('s');
+    } 
+
     return (
         <React.Fragment>
             <nav className="navbar is-link">
@@ -22,10 +43,18 @@ const Navbar = () => {
 
                         <div className="navbar-end">
                             <div className="navbar-item">
-                                <div className="buttons">
-                                    <NavLink to={'/create-account'} className="button is-dark"><strong>Sign up</strong></NavLink>
-                                    <NavLink to={'/login'} className="button is-light">Log in</NavLink>
-                                </div>
+                                {
+                                    user ?
+                                        <>
+                                        <p>{user}</p> 
+                                        <button onClick={logout} className="button is-dark">Sign Out</button>
+                                        </>
+                                    :
+                                    <div className="buttons">
+                                        <NavLink to={'/create-account'} className="button is-dark"><strong>Sign up</strong></NavLink>
+                                        <NavLink to={'/login'} className="button is-light">Log in</NavLink>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
