@@ -2,29 +2,13 @@
 ** Navbar
 */
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { NavLink } from "react-router-dom";
 
-import fire from '../firebase.config';
-
-const Navbar = () => {
-    const auth = fire.auth();
-
-    const [user, setUser] = useState('');
-
-    useEffect(() => {
-        getUser();
-    }, []);
-
-    const getUser = () => {
-        const user = auth?.currentUser;
-        setUser(user?.email); 
-    }
-
+const Navbar = (props) => {
+    
     const logout = () => {
-        auth.signOut();
-        setUser(''); 
-        console.log('s');
+        props?.userLogOut();
     } 
 
     return (
@@ -44,16 +28,20 @@ const Navbar = () => {
                         <div className="navbar-end">
                             <div className="navbar-item">
                                 {
-                                    user ?
-                                        <>
-                                        <p>{user}</p> 
-                                        <button onClick={logout} className="button is-dark">Sign Out</button>
-                                        </>
-                                    :
-                                    <div className="buttons">
-                                        <NavLink to={'/create-account'} className="button is-dark"><strong>Sign up</strong></NavLink>
-                                        <NavLink to={'/login'} className="button is-light">Log in</NavLink>
-                                    </div>
+                                    props &&
+                                        <>{
+                                            props?.userData ?
+                                                <>
+                                                <p>{props?.userData?.username}</p> 
+                                                <button onClick={logout} className="button is-dark ml-4">Sign Out</button>
+                                                </>
+                                            :
+                                            <div className="buttons">
+                                                <NavLink to={'/create-account'} className="button is-dark"><strong>Sign up</strong></NavLink>
+                                                <NavLink to={'/login'} className="button is-light">Log in</NavLink>
+                                            </div>
+                                        }
+                                    </>
                                 }
                             </div>
                         </div>

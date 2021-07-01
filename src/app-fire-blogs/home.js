@@ -28,19 +28,21 @@ const Home = () => {
     return (
         <React.Fragment>
             <div className="fb-home">
-                <div className="fb-title mb-4">
-                    <h1 className="is-size-3 has-text-weight-semibold">Blogs</h1>
-                </div>
+                <div className="container px-4 py-5">
+                    <div className="fb-title mb-4">
+                        <h1 className="is-size-3 has-text-weight-semibold">Blogs</h1>
+                    </div>
 
-                <div className="fb-all-blogs"> 
-                    <div className="columns is-multiline is-variable is-4">
-                        {
-                            allBlogs?.map(blog => {
-                                return <div className="column is-3" key={blog?._id}>
-                                    <BlogCard blogData={blog}/>
-                                </div>
-                            })
-                        }
+                    <div className="fb-all-blogs"> 
+                        <div className="columns is-multiline is-variable is-4">
+                            {
+                                allBlogs?.map(blog => {
+                                    return <div className="column is-3" key={blog?._id}>
+                                        <BlogCard blogData={blog}/>
+                                    </div>
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
