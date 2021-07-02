@@ -12,6 +12,7 @@ import Navbar from "../components/navbar";
 import Home from './home';
 import Login from './auth/login';
 import Signup from './auth/signup';
+import AddBlog from './add-blog';
 
 const FireBlogs = () => {
     const auth = fire.auth();
@@ -52,6 +53,7 @@ const FireBlogs = () => {
                     <Route exact path="/" component={Home} />   
                     <Route exact path="/login" component={Login} />  
                     <Route exact path="/create-account" component={Signup} />  
+                    <Route exact path="/blog/add" render={(props) => <AddBlog userInfo={user} {...props} />} />  
                 </Switch>
 
             </Router>
