@@ -22,12 +22,12 @@ const Signup = () => {
         password: '', 
     });
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
     useEffect(() => {
-        if(error) {
-            setTimeout(() => setError(''), 5000);
-        }
-    }, [error]);
+        if(error) { setTimeout(() => setError(''), 5000); }
+        if(success) { setTimeout(() => setSuccess(''), 5000); }
+    }, [error, success]);
 
     const handle = {
         change: (e, name) => {
@@ -42,8 +42,7 @@ const Signup = () => {
                         // Add display name
                         result.user.updateProfile({
                             displayName: fieldValues?.username
-                        }); 
-                        console.log(result);
+                        });  
                         addUser(result);
                     }
                 )
@@ -58,8 +57,10 @@ const Signup = () => {
         db.collection("users").doc(user?.user?.uid).set({
             id: user?.user?.uid,
             email: fieldValues?.email,
-            username: fieldValues?.username
-        });        
+            username: fieldValues?.username,
+            isAdmin: false
+        }).then(() => setSuccess(true))
+        .catch(e => setError(e));  
     } 
 
     return (
@@ -80,9 +81,15 @@ const Signup = () => {
                                     <button className="delete" onClick={() => setError('')}></button>
                                     <p>{error?.message}</p>
                                 </div>
+                            } 
+                            {
+                                success &&
+                                <div className="notification is-success is-light mb-2 p-3">
+                                    <button className="delete" onClick={() => setSuccess('')}></button>
+                                    <p>Account Created.</p>
+                                </div>
                             }
-
-                                
+                                                            
                             <div className="field">
                                 <label className="label">Username</label>
                                 <div className="control">

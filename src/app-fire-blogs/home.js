@@ -34,10 +34,10 @@ const Home = () => {
                     </div>
 
                     <div className="fb-all-blogs"> 
-                        <div className="columns is-multiline is-variable is-4">
+                        <div className="columns is-multiline is-mobile is-4">
                             {
                                 allBlogs?.map(blog => {
-                                    return <div className="column is-3" key={blog?._id}>
+                                    return <div className="column is-half-mobile is-one-third-tablet is-one-third-widescreen is-one-quarter-fullhd" key={blog?._id}>
                                         <BlogCard blogData={blog}/>
                                     </div>
                                 })

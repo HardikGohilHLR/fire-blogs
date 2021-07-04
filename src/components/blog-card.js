@@ -9,7 +9,7 @@ const BlogCard = (props) => {
         <React.Fragment>
             <div className="card">
                 <div className="card-image">
-                    <figure className="image is-16by9">
+                    <figure className="image is-2by1">
                         <img src={`https://loremflickr.com/320/240?random=${props?.blogData?._id}`} alt="Placeholder" />
                     </figure>
                 </div>

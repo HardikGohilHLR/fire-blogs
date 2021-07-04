@@ -2,31 +2,51 @@
 ** Navbar
 */
 
-import React from 'react';
-import { NavLink } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useLocation, NavLink } from "react-router-dom";
 
 const Navbar = (props) => {
-    
+    const location = useLocation();
+    const [navbarToggle, setNavbarToggle] = useState(false);
+
+    useEffect(() => {
+        setNavbarToggle(false); 
+    }, [location]);
+
     const logout = () => {
         props?.userLogOut();
     } 
 
+    const toggleNavbar = () => {
+        setNavbarToggle(!navbarToggle);
+    }
+
+
+    console.log(props?.userData);
     return (
         <React.Fragment>
             <nav className="navbar is-link">
                 <div className="container">
                     <div className="navbar-brand"> 
                         <NavLink to={'/'} className="navbar-item">FireBlogs</NavLink> 
+                        
+                        <a className={`navbar-burger ${navbarToggle ? 'is-active' : ''}`} data-target="navMenu" aria-label="menu" aria-expanded="false" onClick={toggleNavbar}>
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                        </a>
                     </div>
 
-                    <div className="navbar-menu">
-                        <div className="navbar-start">
-                            <NavLink to={'/'} className="navbar-item">Home</NavLink> 
-                            <NavLink to={'/about'} className="navbar-item">About</NavLink> 
+                    <div className={`navbar-menu ${navbarToggle ? 'is-active' : ''}`}>
+                        <div className="navbar-start"> 
+                        {
+                            props?.userData?.isAdmin && 
+                            <NavLink exact activeClassName="is-active" to={'/blog/add'} className="navbar-item">Add Blog</NavLink> 
+                        }
                         </div>
 
                         <div className="navbar-end">
-                            <div className="navbar-item">
+                            <div className="navbar-item is-flex is-align-items-center">
                                 {
                                     props &&
                                         <>{
@@ -46,6 +66,7 @@ const Navbar = (props) => {
                             </div>
                         </div>
                     </div>
+                
                 </div>
             </nav>
         </React.Fragment>
