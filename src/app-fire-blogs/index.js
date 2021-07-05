@@ -2,9 +2,9 @@
 ** Main Component
 */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Profiler } from 'react';
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"; 
+import { BrowserRouter as Router, Switch, Redirect, Route } from "react-router-dom"; 
 import fire from '../firebase.config';
 
 // Components
@@ -12,18 +12,23 @@ import Navbar from "../components/navbar";
 import Home from './home';
 import Login from './auth/login';
 import Signup from './auth/signup';
+import Profile from './user/profile';
 import AddBlog from './add-blog';
 
 const FireBlogs = () => {
     const auth = fire.auth();
     const db = fire.firestore();
 
-    const [user, setUser] = useState('');
+    const [user, setUser] = useState(true);
 
     useEffect(() => {
         auth.onAuthStateChanged(user => {
-            setUser(user); 
-            if(user?.uid) fetchUser(user);
+            setUser(user);  
+            if(user?.uid)  { 
+                fetchUser(user) 
+            } else {
+                setUser(false);
+            }
         });          
     }, []);
 
@@ -49,11 +54,12 @@ const FireBlogs = () => {
             <Router>
                 <Navbar userData={user} userLogOut={userLogOut} />
 
-                <Switch> 
-                    <Route exact path="/" component={Home} />   
-                    <Route exact path="/login" component={Login} />  
-                    <Route exact path="/create-account" component={Signup} />  
-                    <Route exact path="/blog/add" render={(props) => <AddBlog userInfo={user} {...props} />} />  
+                <Switch>       
+                    <Route exact path="/" render={(props) => <Home userInfo={user} {...props} />} />       
+                    <Route exact path="/login" render={props => ( !user ? <Login userInfo={user} {...props} /> : <Redirect to="/" /> )} />
+                    <Route exact path="/create-account" render={props => ( !user ? <Signup userInfo={user} {...props} /> : <Redirect to="/" /> )} />
+                    <Route exact path="/blog/add" render={props => ( user?.isAdmin ? <AddBlog userInfo={user} {...props} /> : <Redirect to="/" /> )} />
+                    <Route exact path="/profile/:id" render={props => ( user ? <Profile userInfo={user} {...props} /> : <Redirect to="/login" /> )} />
                 </Switch>
 
             </Router>

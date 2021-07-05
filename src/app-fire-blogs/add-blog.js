@@ -8,7 +8,7 @@ import fire from '../firebase.config';
 // Packages
 import Validator from 'simple-react-validator';
 
-const AddBlog = (props) => {
+const AddBlog = (props) => { 
     const db = fire.firestore();
 
     const forceUpdate = useForceUpdate();

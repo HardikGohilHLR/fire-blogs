@@ -3,17 +3,18 @@
 */
 
 import React, { useRef, useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useForceUpdate } from '../../common/hooks/useForceUpdate'; 
 import fire from '../../firebase.config';
 
 // Packages
 import Validator from 'simple-react-validator';
 
-const Signup = () => { 
+const Signup = (props) => { 
     const auth = fire.auth();
     const db = fire.firestore();
     const forceUpdate = useForceUpdate();
+    const history = useHistory(); 
 
     const validator = useRef(new Validator({ element: message => <>{message}</>, autoForceUpdate: {forceUpdate} })); 
     const [fieldValues, setFieldValues] = useState({
@@ -28,7 +29,7 @@ const Signup = () => {
         if(error) { setTimeout(() => setError(''), 5000); }
         if(success) { setTimeout(() => setSuccess(''), 5000); }
     }, [error, success]);
-
+ 
     const handle = {
         change: (e, name) => {
             setFieldValues({...fieldValues, [name]: e});
@@ -38,16 +39,16 @@ const Signup = () => {
     const submitForm = () => { 
         if (validator?.current?.allValid()) { 
             auth.createUserWithEmailAndPassword(fieldValues?.email, fieldValues?.password)
-                .then(result => {
-                        // Add display name
-                        result.user.updateProfile({
-                            displayName: fieldValues?.username
-                        });  
-                        addUser(result);
-                    }
-                )
-                .catch(e => setError(e));
-        } else { 
+            .then(result => {
+                    // Add display name
+                    result.user.updateProfile({
+                        displayName: fieldValues?.username
+                    });  
+                    addUser(result);
+                    history.push('/');
+            })
+            .catch(e => setError(e));
+        } else {  
             validator?.current?.showMessages(); 
         }
     }
@@ -72,7 +73,7 @@ const Signup = () => {
                     </div>
 
                     <div className="columns">
-                    <div className="column column is-half is-offset-one-quarter">
+                    <div className="column is-half is-offset-one-quarter">
 
                         <form>
                             {

@@ -3,16 +3,17 @@
 */
 
 import React, { useRef, useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useForceUpdate } from '../../common/hooks/useForceUpdate';
 import fire from '../../firebase.config';
 
 // Packages
 import Validator from 'simple-react-validator';
 
-const Signup = () => { 
+const Login = (props) => { 
     const forceUpdate = useForceUpdate();
     const auth = fire.auth();
+    const history = useHistory();
     const validator = useRef(new Validator({ autoForceUpdate: {forceUpdate} }));
       
     const [fieldValues, setFieldValues] = useState({
@@ -23,11 +24,9 @@ const Signup = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        if(error) {
-            setTimeout(() => setError(''), 5000);
-        }
+        if(error) { setTimeout(() => setError(''), 5000); }
     }, [error]);
-
+ 
     const handle = {
         change: (e, name) => {
             setFieldValues({...fieldValues, [name]: e});
@@ -37,7 +36,7 @@ const Signup = () => {
     const submitForm = () => { 
         if (validator?.current?.allValid()) {
             auth.signInWithEmailAndPassword(fieldValues?.email, fieldValues?.password).then(cred => {
-                console.log(cred?.user?.email);
+                history.push('/');
             })
             .catch(e => setError(e));
         } else {
@@ -108,4 +107,4 @@ const Signup = () => {
     )
 }
 
-export default Signup;
+export default Login;

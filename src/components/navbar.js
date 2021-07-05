@@ -3,10 +3,11 @@
 */
 
 import React, { useState, useEffect } from 'react';
-import { useLocation, NavLink } from "react-router-dom";
+import { useLocation, NavLink, useHistory } from "react-router-dom";
 
 const Navbar = (props) => {
     const location = useLocation();
+    const history = useHistory();
     const [navbarToggle, setNavbarToggle] = useState(false);
 
     useEffect(() => {
@@ -21,8 +22,10 @@ const Navbar = (props) => {
         setNavbarToggle(!navbarToggle);
     }
 
+    const userProfile = () => {
+        history.push(`/profile/${props?.userData?.uid}`);
+    }
 
-    console.log(props?.userData);
     return (
         <React.Fragment>
             <nav className="navbar is-link">
@@ -45,14 +48,20 @@ const Navbar = (props) => {
                         }
                         </div>
 
-                        <div className="navbar-end">
-                            <div className="navbar-item is-flex is-align-items-center">
+                        <div className="navbar-end is-align-items-center">
+                            {/* <div className="is-flex is-align-items-center"> */}
                                 {
                                     props &&
                                         <>{
                                             props?.userData ?
-                                                <>
-                                                <p>{props?.userData?.username}</p> 
+                                                <> 
+                                                <div className="is-flex is-align-items-center" style={{ cursor: 'pointer' }} onClick={userProfile}>
+                                                    <figure className="image is-32x32 mr-3">
+                                                        <img className="is-rounded" src="https://bulma.io/images/placeholders/32x32.png" />
+                                                    </figure>
+                                                    <p>{props?.userData?.username}</p> 
+                                                </div>
+
                                                 <button onClick={logout} className="button is-dark ml-4">Sign Out</button>
                                                 </>
                                             :
@@ -63,7 +72,7 @@ const Navbar = (props) => {
                                         }
                                     </>
                                 }
-                            </div>
+                            {/* </div> */}
                         </div>
                     </div>
                 
