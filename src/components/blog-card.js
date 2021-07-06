@@ -2,12 +2,18 @@
 ** Blog Card
 */
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 const BlogCard = (props) => { 
+    const history = useHistory();
+
+    const viewBlog = () => {
+        history.push(`/blog/${props?.blogData?._id}`);
+    }
     
     return (
         <React.Fragment>
-            <div className="card">
+            <div className="card" onClick={viewBlog}>
                 <div className="card-image">
                     <figure className="image is-2by1">
                         <img src={`https://loremflickr.com/320/240?random=${props?.blogData?._id}`} alt="Placeholder" />
@@ -28,7 +34,11 @@ const BlogCard = (props) => {
                     <div className="content">
                         <h3 className="is-size-5 ellipsis is-ellipsis-1">{ props?.blogData?.title }</h3>
                         <p className="ellipsis is-ellipsis-2">{ props?.blogData?.content }</p>                    
-                        <p className="title is-7">{ props?.blogData?.date.toDate().toDateString() }</p>
+                        <p className="title is-7">
+                            { props?.blogData?.date.toDate().toLocaleDateString(undefined, {
+                                weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' }) 
+                            }
+                        </p>
                     </div>
                 </div>
             </div>

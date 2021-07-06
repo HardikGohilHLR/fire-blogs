@@ -14,6 +14,7 @@ import Login from './auth/login';
 import Signup from './auth/signup';
 import Profile from './user/profile';
 import AddBlog from './add-blog';
+import BlogDetail from './blog-detail';
 
 const FireBlogs = () => {
     const auth = fire.auth();
@@ -60,6 +61,7 @@ const FireBlogs = () => {
                     <Route exact path="/create-account" render={props => ( !user ? <Signup userInfo={user} {...props} /> : <Redirect to="/" /> )} />
                     <Route exact path="/blog/add" render={props => ( user?.isAdmin ? <AddBlog userInfo={user} {...props} /> : <Redirect to="/" /> )} />
                     <Route exact path="/profile/:id" render={props => ( user ? <Profile userInfo={user} {...props} /> : <Redirect to="/login" /> )} />
+                    <Route exact path="/blog/:id" render={props => <BlogDetail userInfo={user} {...props} />} />
                 </Switch>
 
             </Router>
