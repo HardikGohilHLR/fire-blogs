@@ -21,7 +21,7 @@ const Home = () => {
         let allBlogsData = [];
         data.forEach(doc => {
             allBlogsData.push({...doc.data(), _id: doc?.id});
-        });     
+        });
         setAllBlogs(allBlogsData);
     }
 
@@ -41,6 +41,10 @@ const Home = () => {
                                         <BlogCard blogData={blog}/>
                                     </div>
                                 })
+                            }
+
+                            {
+                                !allBlogs?.length && <div className="column has-text-centered"><p className="is-size-5">No blogs found.</p></div>                                
                             }
                         </div>
                     </div>

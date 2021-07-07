@@ -2,7 +2,7 @@
 ** Main Component
 */
 
-import React, { useState, useEffect, Profiler } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { BrowserRouter as Router, Switch, Redirect, Route } from "react-router-dom"; 
 import fire from '../firebase.config';
@@ -59,7 +59,7 @@ const FireBlogs = () => {
                     <Route exact path="/" render={(props) => <Home userInfo={user} {...props} />} />       
                     <Route exact path="/login" render={props => ( !user ? <Login userInfo={user} {...props} /> : <Redirect to="/" /> )} />
                     <Route exact path="/create-account" render={props => ( !user ? <Signup userInfo={user} {...props} /> : <Redirect to="/" /> )} />
-                    <Route exact path="/blog/add" render={props => ( user?.isAdmin ? <AddBlog userInfo={user} {...props} /> : <Redirect to="/" /> )} />
+                    <Route exact path="/blog/add" render={props => ( user ? <AddBlog userInfo={user} {...props} /> : <Redirect to="/" /> )} />
                     <Route exact path="/profile/:id" render={props => ( user ? <Profile userInfo={user} {...props} /> : <Redirect to="/login" /> )} />
                     <Route exact path="/blog/:id" render={props => <BlogDetail userInfo={user} {...props} />} />
                 </Switch>

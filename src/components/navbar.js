@@ -33,11 +33,11 @@ const Navbar = (props) => {
                     <div className="navbar-brand"> 
                         <NavLink to={'/'} className="navbar-item">FireBlogs</NavLink> 
                         
-                        <a className={`navbar-burger ${navbarToggle ? 'is-active' : ''}`} data-target="navMenu" aria-label="menu" aria-expanded="false" onClick={toggleNavbar}>
+                        <button className={`navbar-burger ${navbarToggle ? 'is-active' : ''}`} data-target="navMenu" aria-label="menu" aria-expanded="false" onClick={toggleNavbar}>
                             <span aria-hidden="true"></span>
                             <span aria-hidden="true"></span>
                             <span aria-hidden="true"></span>
-                        </a>
+                        </button>
                     </div>
 
                     <div className={`navbar-menu ${navbarToggle ? 'is-active' : ''}`}>
@@ -57,7 +57,7 @@ const Navbar = (props) => {
                                                 <> 
                                                 <div className="is-flex is-align-items-center" style={{ cursor: 'pointer' }} onClick={userProfile}>
                                                     <figure className="image is-32x32 mr-3">
-                                                        <img className="is-rounded" src="https://bulma.io/images/placeholders/32x32.png" />
+                                                        <img className="is-rounded" src="https://bulma.io/images/placeholders/32x32.png" alt="user" title="user" />
                                                     </figure>
                                                     <p>{props?.userData?.username}</p> 
                                                 </div>

@@ -3,10 +3,12 @@
 */
 
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import fire from '../../firebase.config';
 
-const Profile = ({ userInfo }) => {
+const Profile = () => {
     const db = fire.firestore();
+    const params = useParams();
 
     const [fieldValues, setFieldValues] = useState({
         username: '',
@@ -22,19 +24,22 @@ const Profile = ({ userInfo }) => {
 
     useEffect(() => { 
         setFieldValuesProps(); 
-    }, [userInfo]);
+    }, []);
 
     useEffect(() => {
         if(allValues?.error) { setTimeout(() => setAllValues({...allValues, error: ''}), 5000); }
         if(allValues?.success) { setTimeout(() => setAllValues({...allValues, success: ''}), 5000); }
     }, [allValues?.error, allValues?.success]);
 
-    const setFieldValuesProps = () => {
+    const setFieldValuesProps = async () => {        
+        const response = db.collection('users').doc(params?.id);
+        const data = await response.get(); 
         setFieldValues({
             ...fieldValues,
-            username: userInfo?.username,
-            email: userInfo?.email,
-            isAdmin: userInfo?.isAdmin 
+            id: data?.id,
+            username: data.data()?.username,
+            email: data.data()?.email,
+            isAdmin: data.data()?.isAdmin 
         });
     }
 
@@ -46,8 +51,8 @@ const Profile = ({ userInfo }) => {
             setAllValues({...allValues, isEditable: false});
         },
         saveProfile: async () => {              
-            db.collection("users").doc(userInfo?.uid).set({ 
-                id: userInfo?.uid,
+            db.collection("users").doc(fieldValues?.id).set({ 
+                id: fieldValues?.id,
                 email: fieldValues?.email,
                 username: fieldValues?.username,
                 isAdmin: fieldValues?.isAdmin

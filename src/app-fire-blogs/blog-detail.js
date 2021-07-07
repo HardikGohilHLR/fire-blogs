@@ -18,8 +18,7 @@ const BlogDetail = (props) => {
 
     const getBlog = async () => {  
         const response = db.collection('blogs').doc(params?.id);
-        const data = await response.get(); 
-        console.log(data.data());
+        const data = await response.get();  
         setBlog(data.data());
     }
 
@@ -28,13 +27,16 @@ const BlogDetail = (props) => {
             <div className="fb-profile">
                 <div className="container px-4 py-5"> 
                     <h1 className="is-size-2 has-text-weight-semibold mb-5">{blog?.title}</h1>
-                    <div class="columns is-mobile mb-5">
-                        <div class="column is-three-quarters-mobile is-two-thirds-tablet is-half-desktop">    
-                            <figure className="image is-2by1">
-                                <img src={`https://loremflickr.com/320/240?random=${blog?._id}`} alt="Placeholder" />
-                            </figure>
+                    {
+                        blog?.blogImage &&
+                        <div className="columns is-mobile mb-5">
+                            <div className="column is-three-quarters-mobile is-two-thirds-tablet is-half-desktop">    
+                                <figure className="image is-2by1">
+                                    <img src={blog?.blogImage} alt={blog?.title} title={blog?.title}/>
+                                </figure>
+                            </div>
                         </div>
-                    </div>
+                    }
                     <p>{blog?.content}</p>
                 </div>
             </div>

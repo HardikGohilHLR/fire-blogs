@@ -4,7 +4,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-const BlogCard = (props) => { 
+const BlogCard = (props) => {  
     const history = useHistory();
 
     const viewBlog = () => {
@@ -13,10 +13,10 @@ const BlogCard = (props) => {
     
     return (
         <React.Fragment>
-            <div className="card" onClick={viewBlog}>
+            <div className="card is-clickable" onClick={viewBlog}>
                 <div className="card-image">
                     <figure className="image is-2by1">
-                        <img src={`https://loremflickr.com/320/240?random=${props?.blogData?._id}`} alt="Placeholder" />
+                        <img src={props?.blogData?.blogImage} alt="Placeholder" />
                     </figure>
                 </div>
                 <div className="card-content p-4">
