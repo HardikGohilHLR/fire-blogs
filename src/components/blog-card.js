@@ -35,7 +35,7 @@ const BlogCard = (props) => {
                         <h3 className="is-size-5 ellipsis is-ellipsis-1">{ props?.blogData?.title }</h3>
                         <p className="ellipsis is-ellipsis-2">{ props?.blogData?.content }</p>                    
                         <p className="title is-7">
-                            { props?.blogData?.date.toDate().toLocaleDateString(undefined, {
+                            { props?.blogData?.date?.toDate().toLocaleDateString(undefined, {
                                 weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' }) 
                             }
                         </p>

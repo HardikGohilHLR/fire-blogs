@@ -13,9 +13,9 @@ import Validator from 'simple-react-validator';
 const Login = (props) => { 
     const forceUpdate = useForceUpdate();
     const auth = fire.auth();
-    const history = useHistory();
-    const validator = useRef(new Validator({ autoForceUpdate: {forceUpdate} }));
-      
+    const history = useHistory(); 
+    const validator = useRef(new Validator({ element: message => <>{message}</>, autoForceUpdate: {forceUpdate} })); 
+          
     const [fieldValues, setFieldValues] = useState({
         email: '',
         password: '',

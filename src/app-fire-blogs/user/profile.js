@@ -9,18 +9,24 @@ import fire from '../../firebase.config';
 const Profile = () => {
     const db = fire.firestore();
     const params = useParams();
+    const storage = fire.storage();
 
     const [fieldValues, setFieldValues] = useState({
         username: '',
         email: '',
-        isAdmin: false 
+        isAdmin: false,
+        image: '',
+        imageBase64: '',
+        imageURL: ''
     });
 
     const [allValues, setAllValues] = useState({
         isEditable: true,
-        erorr: '',
+        error: '', 
         success: ''
     });
+
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => { 
         setFieldValuesProps(); 
@@ -34,12 +40,14 @@ const Profile = () => {
     const setFieldValuesProps = async () => {        
         const response = db.collection('users').doc(params?.id);
         const data = await response.get(); 
+        console.log(data.data());
         setFieldValues({
             ...fieldValues,
             id: data?.id,
             username: data.data()?.username,
             email: data.data()?.email,
-            isAdmin: data.data()?.isAdmin 
+            isAdmin: data.data()?.isAdmin,
+            image: data.data()?.image
         });
     }
 
@@ -50,21 +58,41 @@ const Profile = () => {
         editProfile: () => {
             setAllValues({...allValues, isEditable: false});
         },
-        saveProfile: async () => {              
-            db.collection("users").doc(fieldValues?.id).set({ 
-                id: fieldValues?.id,
-                email: fieldValues?.email,
-                username: fieldValues?.username,
-                isAdmin: fieldValues?.isAdmin
-            }).then(() => setAllValues({...allValues, success: true, isEditable: true}))
-            .catch(e => setAllValues({...allValues, error: e}));  
+        uploadImage: (e, name) => { 
+            const image = e.target.files[0]; 
+            console.log(image);
+            setFieldValues({...fieldValues, image: image, imageBase64: URL.createObjectURL(image)});
+        },
+        saveProfile: async () => {   
+            setIsLoading(true);
+            const uploadTask = storage.ref(`/images/${fieldValues?.image?.name}`).put(fieldValues?.image);
+            uploadTask.on('state_changed', () => {}, 
+                err => {  
+                    setAllValues({...allValues, error: err});
+                    setIsLoading(false);
+                    return false;
+                }, () => { 
+                storage.ref('images').child(fieldValues?.image?.name).getDownloadURL()
+                .then(fireBaseUrl => {
+                    setFieldValues({...fieldValues, imageURL: fireBaseUrl});
+                    db.collection("users").doc(fieldValues?.id).set({ 
+                        id: fieldValues?.id,
+                        email: fieldValues?.email,
+                        username: fieldValues?.username,
+                        isAdmin: fieldValues?.isAdmin,
+                        image: fireBaseUrl
+                    })                    
+                    .then(() => setAllValues({...allValues, success: true, isEditable: true}))
+                    .catch(e => setAllValues({...allValues, error: e}));
+                })
+            });  
         },
         cancel: () => {
             setAllValues({...allValues, isEditable: true});
             setFieldValuesProps();
         }
     }
-
+ 
     return (
         
         <div className="fb-profile">
@@ -100,6 +128,33 @@ const Profile = () => {
  
                 <form>
                     <div className="columns is-multiline">
+                        <div className="field column is-flex is-align-items-center is-12"> 
+                            <figure class="image is-128x128 mr-5">
+                                <img class="is-rounded" style={{height: '100%'}} src={`${fieldValues?.imageBase64 ? fieldValues?.imageBase64 : fieldValues?.image ? fieldValues?.image : '' }`} />
+                            </figure>
+                            <div className="field"> 
+                                <div className="control">
+                                    <div className="file is-small is-info has-name">
+                                        <label className="file-label">
+                                            <input className="file-input" type="file" name="image" 
+                                                onChange={(e) => handle.uploadImage(e, 'image')}
+                                            />
+                                            <span className="file-cta">
+                                                <span className="file-icon"> <i className="fas fa-upload"></i> </span>
+                                                <span className="file-label">
+                                                    Upload Profile Photo
+                                                </span>
+                                            </span>
+                                            {
+                                                fieldValues?.image?.name && 
+                                                    <span className="file-name"> { fieldValues?.image?.name } </span>
+                                            }
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                         <div className="field column is-6 mb-0">
                             <label className="label">Username</label>
                             <div className="control">

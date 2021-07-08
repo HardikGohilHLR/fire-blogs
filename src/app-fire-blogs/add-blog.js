@@ -12,9 +12,9 @@ const AddBlog = (props) => {
     const db = fire.firestore();
     const storage = fire.storage();
 
-    const forceUpdate = useForceUpdate();
-    const validator = useRef(new Validator({ autoForceUpdate: {forceUpdate} }));
-      
+    const forceUpdate = useForceUpdate(); 
+    const validator = useRef(new Validator({ element: message => <>{message}</>, autoForceUpdate: {forceUpdate} })); 
+          
     const [fieldValues, setFieldValues] = useState({
         title: '',
         content: '',
