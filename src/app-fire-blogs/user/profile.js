@@ -39,8 +39,7 @@ const Profile = () => {
 
     const setFieldValuesProps = async () => {        
         const response = db.collection('users').doc(params?.id);
-        const data = await response.get(); 
-        console.log(data.data());
+        const data = await response.get();
         setFieldValues({
             ...fieldValues,
             id: data?.id,
@@ -59,8 +58,7 @@ const Profile = () => {
             setAllValues({...allValues, isEditable: false});
         },
         uploadImage: (e, name) => { 
-            const image = e.target.files[0]; 
-            console.log(image);
+            const image = e.target.files[0];  
             setFieldValues({...fieldValues, image: image, imageBase64: URL.createObjectURL(image)});
         },
         saveProfile: async () => {   
@@ -129,8 +127,8 @@ const Profile = () => {
                 <form>
                     <div className="columns is-multiline">
                         <div className="field column is-flex is-align-items-center is-12"> 
-                            <figure class="image is-128x128 mr-5">
-                                <img class="is-rounded" style={{height: '100%'}} src={`${fieldValues?.imageBase64 ? fieldValues?.imageBase64 : fieldValues?.image ? fieldValues?.image : '' }`} />
+                            <figure className="image is-128x128 mr-5">
+                                <img className="is-rounded" style={{height: '100%'}} src={`${fieldValues?.imageBase64 ? fieldValues?.imageBase64 : fieldValues?.image ? fieldValues?.image : 'https://cdn.icon-icons.com/icons2/1736/PNG/512/4043260-avatar-male-man-portrait_113269.png' }`} />
                             </figure>
                             <div className="field"> 
                                 <div className="control">
@@ -138,6 +136,7 @@ const Profile = () => {
                                         <label className="file-label">
                                             <input className="file-input" type="file" name="image" 
                                                 onChange={(e) => handle.uploadImage(e, 'image')}
+                                                disabled={allValues?.isEditable} 
                                             />
                                             <span className="file-cta">
                                                 <span className="file-icon"> <i className="fas fa-upload"></i> </span>
@@ -146,8 +145,7 @@ const Profile = () => {
                                                 </span>
                                             </span>
                                             {
-                                                fieldValues?.image?.name && 
-                                                    <span className="file-name"> { fieldValues?.image?.name } </span>
+                                                fieldValues?.image?.name && <span className="file-name"> { fieldValues?.image?.name } </span>
                                             }
                                         </label>
                                     </div>
