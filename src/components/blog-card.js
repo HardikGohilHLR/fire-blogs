@@ -1,12 +1,26 @@
 /*
 ** Blog Card
 */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import fire from '../firebase.config';
 
 const BlogCard = (props) => {  
-    const history = useHistory();
+    const db = fire.firestore();
+    const history = useHistory();     
 
+    const [user, setUser] = useState({});
+    
+    useEffect(() => {
+        getUserName(props?.blogData?.user);
+    }, [props?.blogData])
+    
+    const getUserName = async (userId) => {
+        const response = db.collection('users');     
+        const data = await response.where('id', '==' , userId).get();  
+        data?.forEach(doc => setUser(doc.data()));  
+    }
+    
     const viewBlog = () => {
         history.push(`/blog/${props?.blogData?._id}`);
     }
@@ -23,11 +37,11 @@ const BlogCard = (props) => {
                     <div className="media mb-3 is-flex is-align-items-center">
                         <div className="media-left">
                             <figure className="image is-32x32">
-                                <img src={`https://i.pravatar.cc/150?img=${props?.blogData?.user}`} alt="Placeholder" className="is-rounded"/>
+                                <img src={user?.image ? user.image : 'https://cdn.icon-icons.com/icons2/1736/PNG/512/4043260-avatar-male-man-portrait_113269.png'} alt="Placeholder" className="is-rounded" style={{ 'height': '100%' }} />
                             </figure>
                         </div>
                         <div className="media-content">
-                            <p className="title is-6">John Smith</p>
+                            <p className="title is-6">{user?.username}</p>
                         </div>
                     </div>
 

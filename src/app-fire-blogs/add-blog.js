@@ -19,7 +19,8 @@ const AddBlog = (props) => {
         title: '',
         content: '',
         blogImage: '',
-        blogImageURL: ''
+        blogImageURL: '',
+        isVisible: ''
     });
  
     const [error, setError] = useState('');
@@ -42,11 +43,13 @@ const AddBlog = (props) => {
     }  
 
     const submitForm = () => { 
+        console.log(props?.userInfo);
         if (validator?.current?.allValid()) { 
             // Add Blog
             setIsLoading(true);
             const uploadTask = storage.ref(`/images/${fieldValues?.blogImage?.name}`).put(fieldValues?.blogImage);
-            uploadTask.on('state_changed', err => {
+            uploadTask.on('state_changed', () => {
+                },err => {
                     setError(err); 
                     setIsLoading(false);
                     return false;
@@ -59,12 +62,13 @@ const AddBlog = (props) => {
                         content: fieldValues?.content, 
                         date: new Date(),
                         user: props?.userInfo?.uid,
-                        blogImage: fireBaseUrl
+                        blogImage: fireBaseUrl,
+                        isVisible: true
                     }).then(() => { 
                         setSuccess(true);
                         setIsLoading(false);
                         setFieldValues({...fieldValues, title: '', content: '', blogImage: ''}); 
-                    }).catch(e => { setError(e); setIsLoading(false);})
+                    }).catch(e => { console.log(e); setError(e); setIsLoading(false);})
                 })
             });  
 

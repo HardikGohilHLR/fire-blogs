@@ -63,8 +63,10 @@ const Navbar = (props) => {
                     <div className={`navbar-menu ${navbarToggle ? 'is-active' : ''}`}>
                         <div className="navbar-start"> 
                         {
-                            user?.isAdmin && 
+                            user?.isAdmin && <> 
                             <NavLink exact activeClassName="is-active" to={'/blog/add'} className="navbar-item">Add Blog</NavLink> 
+                            <NavLink exact activeClassName="is-active" to={'/blog-list'} className="navbar-item">All Blogs</NavLink> 
+                            </>
                         }
                         </div>
 

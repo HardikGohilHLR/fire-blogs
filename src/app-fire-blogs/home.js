@@ -37,9 +37,16 @@ const Home = () => {
                         <div className="columns is-multiline is-mobile is-4">
                             {
                                 allBlogs?.map(blog => {
-                                    return <div className="column is-half-mobile is-one-third-tablet is-one-third-widescreen is-one-quarter-fullhd" key={blog?._id}>
-                                        <BlogCard blogData={blog}/>
-                                    </div>
+                                    return (
+                                        <>
+                                        {
+                                            blog?.isVisible &&
+                                            <div className="column is-half-mobile is-one-third-tablet is-one-third-widescreen is-one-quarter-fullhd" key={blog?._id}>
+                                                <BlogCard blogData={blog}/>
+                                            </div>
+                                        }
+                                        </>
+                                    )
                                 })
                             }
 

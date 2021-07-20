@@ -102,8 +102,8 @@ const Profile = () => {
                         allValues?.isEditable ? 
                             <button className="button is-primary" onClick={handle.editProfile}>Edit</button>
                         :
-                        <div>
-                            <button className="button is-link mr-3" onClick={handle.saveProfile}>Save</button>
+                        <div>                            
+                            <button type="button" className={`button is-link mr-3 ${isLoading ? 'is-loading' : ''}`} onClick={handle.saveProfile}>Save</button>
                             <button className="button is-light" onClick={handle.cancel}>Cancel</button>
                         </div>
                     }
