@@ -7,10 +7,12 @@ import fire from '../firebase.config';
 
 // Packages
 import Validator from 'simple-react-validator';
+import { useHistory } from 'react-router-dom';
 
 const AddBlog = (props) => { 
     const db = fire.firestore();
     const storage = fire.storage();
+    const history = useHistory();
 
     const forceUpdate = useForceUpdate(); 
     const validator = useRef(new Validator({ element: message => <>{message}</>, autoForceUpdate: {forceUpdate} })); 
@@ -28,6 +30,10 @@ const AddBlog = (props) => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        if(!props?.userInfo?.isAdmin) { history.push(`/`); }
+    }, [props?.userInfo]);
+
+    useEffect(() => {
         if(error) { setTimeout(() => setError(''), 5000); }
         if(success) { setTimeout(() => setSuccess(''), 5000); }
     }, [error, success]);
@@ -42,10 +48,14 @@ const AddBlog = (props) => {
         }
     }  
 
-    const submitForm = () => { 
-        console.log(props?.userInfo);
+    const submitForm = () => {  
         if (validator?.current?.allValid()) { 
             // Add Blog
+            let userInfo = {
+                username: props?.userInfo?.username,
+                email: props?.userInfo?.email,
+                image: props?.userInfo?.image,
+            }
             setIsLoading(true);
             const uploadTask = storage.ref(`/images/${fieldValues?.blogImage?.name}`).put(fieldValues?.blogImage);
             uploadTask.on('state_changed', () => {
@@ -61,18 +71,20 @@ const AddBlog = (props) => {
                         title: fieldValues?.title,
                         content: fieldValues?.content, 
                         date: new Date(),
-                        user: props?.userInfo?.uid,
+                        user: userInfo,
                         blogImage: fireBaseUrl,
                         isVisible: true
                     }).then(() => { 
                         setSuccess(true);
                         setIsLoading(false);
                         setFieldValues({...fieldValues, title: '', content: '', blogImage: ''}); 
+                        validator?.current?.hideMessages(); 
                     }).catch(e => { console.log(e); setError(e); setIsLoading(false);})
                 })
             });  
 
         } else {
+            console.log(props?.userInfo);
             validator?.current?.showMessages(); 
         }
     }
@@ -141,9 +153,11 @@ const AddBlog = (props) => {
                                                         Upload file
                                                     </span>
                                                 </span>
-                                                <span className="file-name"> { fieldValues?.blogImage?.name ? fieldValues?.blogImage?.name : 'select file' } </span>
+                                                <span className="file-name"> { fieldValues?.blogImage?.name ? fieldValues?.blogImage?.name : 'Select file' } </span>
                                             </label>
                                         </div>
+                                        <p className="help is-danger">{ validator?.current?.message('blogImage', fieldValues?.blogImage, 'required')}</p> 
+
                                     </div>
 
                                 </div>

@@ -3,11 +3,10 @@
 */
 
 import React, { useEffect, useState } from 'react';
-import fire from '../../firebase.config';
-import { useForceUpdate } from '../../common/hooks/useForceUpdate'; 
+import fire from '../../firebase.config'; 
 import { useHistory } from 'react-router-dom';
 
-const BlogList = () => {
+const BlogList = (props) => {
 
     const db = fire.firestore();
     const history = useHistory();
@@ -25,6 +24,10 @@ const BlogList = () => {
     }, []);
 
     useEffect(() => {
+        if(!props?.userInfo?.isAdmin) { history.push(`/`); }
+    }, [props?.userInfo]);
+
+    useEffect(() => {
         if(allValues?.error) { setTimeout(() => setAllValues({...allValues, error: ''}), 5000); }
         if(allValues?.success) { setTimeout(() => setAllValues({...allValues, success: ''}), 5000); }
     }, [allValues?.error, allValues?.success]);
@@ -32,23 +35,13 @@ const BlogList = () => {
     const getAllBlogs = async () => {
         const response = db.collection('blogs');
         const data = await response.get();
-        let allBlogsList = [];
-        data.forEach(doc => {
-            let user = getuser(doc.data()?.user);
-            console.log('user', user);
-            allBlogsList.push({...doc.data(), id: doc?.id, isSelected: false});
+        let allBlogsList = [];  
+        data.forEach(doc => {  
+            allBlogsList.push({...doc.data(), id: doc?.id, isSelected: false,});
         }); 
         setAllBlogs(allBlogsList);
     }   
     
-    const getuser = async (id) => {
-        const getUserResponse = db.collection('users');     
-        const userData = await getUserResponse.where('id', '==' , id).get();  
-        let user = {};
-        userData?.forEach(doc => user = doc.data());
-        return user;
-    }
-
     const selectAllBlogs = (e) => {
         let allBlogList = [...allBlogs];
         allBlogList?.forEach(blog => {
@@ -164,7 +157,7 @@ const BlogList = () => {
                                 <td>Image</td>
                                 <td>Title</td>
                                 <td>Content</td>
-                                {/* <td>Posted by</td> */}
+                                <td>Posted by</td>
                                 <td>Actions</td>
                             </tr>
                         </thead>
@@ -191,7 +184,7 @@ const BlogList = () => {
                                             <td style={{ width: '30%' }}>
                                                 <p className="ellipsis is-ellipsis-2">{blog?.content}</p>
                                             </td>
-                                            {/* <td>{blog?.user}</td> */}
+                                            <td>{blog?.user?.username ? blog?.user?.username : '-'}</td>
                                             <td>
                                                 <div className="is-flex is-align-items-center">
                                                     <button className="button is-small is-primary ml-3" onClick={() => previewBlog(blog)}>
