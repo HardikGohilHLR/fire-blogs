@@ -9,3 +9,11 @@
 .is-ellipsis-7 { -webkit-line-clamp: 7; }
 .is-ellipsis-8 { -webkit-line-clamp: 8; }
 .is-ellipsis-9 { -webkit-line-clamp: 9; }
+
+/* Navbar */
+.navbar.is-link {
+    min-height: 60px;
+}
+.navbar-item img {
+    max-height: 35px;
+}

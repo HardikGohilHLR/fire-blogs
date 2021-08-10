@@ -51,7 +51,9 @@ const Navbar = (props) => {
             <nav className="navbar is-link">
                 <div className="container">
                     <div className="navbar-brand"> 
-                        <NavLink to={'/'} className="navbar-item">FireBlogs</NavLink> 
+                        <NavLink to={'/'} className="navbar-item">
+                            <img src="/fireblogs.svg" alt="Fireblogs" title="Fireblogs"/>    
+                        </NavLink> 
                         
                         <button className={`navbar-burger ${navbarToggle ? 'is-active' : ''}`} data-target="navMenu" aria-label="menu" aria-expanded="false" onClick={toggleNavbar}>
                             <span aria-hidden="true"></span>
