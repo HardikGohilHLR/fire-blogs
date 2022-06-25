@@ -1,0 +1,49 @@
+// Mixins
+// Columns
+@for $i from 1 through 12 {
+    .fb_col-#{$i} {
+        flex: 0 0 auto;
+        width: percentage($i / 12);
+        padding: 0 10px;
+    }
+}
+
+/* Font */
+@mixin fontStyle( $fontWeight: null, $fontSize: null, $lineHeight: null, $color: null) {
+	font-family: $gilroy-font;
+	font-weight: $fontWeight;
+	font-size: ($fontSize)+px;
+	line-height: ($lineHeight)+px;
+	color: $color;
+} 
+
+@mixin mediaFontStyle($fontSize: null, $lineHeight: null) {
+    font-size: ($fontSize)+px;
+    line-height: ($lineHeight)+px;
+} 
+
+// Media Queries
+@mixin media($custom) { @media (max-width: $custom) { @content; } }
+
+// Paddding and Margin 
+@for $i from 0 through 100 {
+    .m-#{$i} { $margin: $i * 1px; margin: $margin; }
+    .mt-#{$i} { $margin: $i * 1px; margin-top: $margin; }
+    .mr-#{$i} { $margin: $i * 1px; margin-right: $margin; }
+    .mb-#{$i} { $margin: $i * 1px; margin-bottom: $margin; }
+    .ml-#{$i} { $margin: $i * 1px; margin-left: $margin; }
+    .p-#{$i} { $padding: $i * 1px; padding: $padding; }
+    .pt-#{$i} { $padding: $i * 1px; padding-top: $padding; }
+    .pr-#{$i} { $padding: $i * 1px; padding-right: $padding; }
+    .pb-#{$i} { $padding: $i * 1px; padding-bottom: $padding; }
+    .pl-#{$i} { $padding: $i * 1px; padding-left: $padding; }
+}
+
+// Flex Classes
+@mixin flexCenter { display: flex; align-items: center; }
+@mixin flexCenterBetween { display: flex; align-items: center; justify-content: space-between; }
+@mixin flexBetween { display: flex; justify-content: space-between; }
+@mixin flexCenterCenter { display: flex; align-items: center; justify-content: center; }
+
+// Width Height
+@mixin square($size) { width: $size; height: $size; }

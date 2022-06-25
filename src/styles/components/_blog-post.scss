@@ -1,0 +1,28 @@
+// Blog Post card
+
+.fb_blog-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+}
+
+.fb_blog-post {
+
+    &__image {
+        font-size: 0;
+        max-height: 250px;
+        border-radius: 6px;
+        
+        img {
+            max-height: 250px;
+            border-radius: 6px;
+            object-fit: cover;
+            height: 100%; 
+            width: 100%;
+        }
+    }
+
+    &__desc {
+
+    }
+}
