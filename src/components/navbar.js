@@ -2,11 +2,9 @@
 ** Navbar
 */
 
-import React, { useState, useEffect } from 'react';
-import { useLocation, NavLink } from "react-router-dom";
-import fire from '../firebase.config';
+import React from 'react';
 
-const Navbar = (props) => {
+const Navbar = () => {
     // const db = fire.firestore();
     // const location = useLocation();
         

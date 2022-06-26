@@ -7,7 +7,7 @@ import React, { lazy } from 'react';
 import { Route, Routes } from "react-router-dom"; 
 
 // Components
-import Navbar from "../components/navbar";
+// import Navbar from "../components/navbar";
 
 const Home = lazy(() => import('./home/home'));
 

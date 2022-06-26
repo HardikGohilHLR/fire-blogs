@@ -39,6 +39,11 @@
     .pl-#{$i} { $padding: $i * 1px; padding-left: $padding; }
 }
 
+// Line Ellipses
+@for $i from 0 through 5 {
+    .fb_ellipsis-#{$i} { -webkit-line-clamp: $i; }
+}
+
 // Flex Classes
 @mixin flexCenter { display: flex; align-items: center; }
 @mixin flexCenterBetween { display: flex; align-items: center; justify-content: space-between; }

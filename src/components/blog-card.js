@@ -1,7 +1,7 @@
 /*
 ** Blog Card
 */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getUserImage, formatDate } from '../common/functions';
@@ -10,7 +10,7 @@ const BlogCard = ({blogData}) => {
 
     const navigate = useNavigate()
 
-    const [user, setUser] = useState({});
+    const [user,] = useState({});
     
     // useEffect(() => {
     //     getUserName(props?.blogData?.user);
@@ -37,11 +37,8 @@ const BlogCard = ({blogData}) => {
                 <div className="fb_blog-post__content">
 
                     <div className="fb_blog-post__desc">
-
-                        <h3>{ blogData?.title }</h3>
-                        <p>{ blogData?.content }</p>  
-
-                        <span> { formatDate(blogData?.date?.toDate(), 'ddd, MMM Do, YYYY') } </span>
+                        <h3 className="fb_ellipsis fb_ellipsis-2">{ blogData?.title }</h3>
+                        <p className="fb_ellipsis fb_ellipsis-3">{ blogData?.content }</p>  
                     </div>
 
                     <div className="fb_blog-post__author">
@@ -51,7 +48,8 @@ const BlogCard = ({blogData}) => {
                         </div>
 
                         <div className="fb_blog-post__author-info">
-                            <p>{user?.username}</p>
+                            <h4>{user?.username || 'John Doe'}</h4>
+                            <span> { formatDate(blogData?.date?.toDate(), 'ddd, MMM Do, YYYY') } </span>
                         </div>
 
                     </div>

@@ -3,26 +3,97 @@
 .fb_blog-list {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 15px;
+    gap: 40px;
+    padding-top: 50px;
 }
 
 .fb_blog-post {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+
+    &:first-child {
+        grid-column: 1 / span 3;
+        display: grid;
+        grid-template-columns: 1.5fr 2fr;
+        gap: 40px;
+
+        .fb_blog-post {
+            &__image {
+                max-height: 300px;
+                img {                    
+                    max-height: 300px;
+                }
+            }
+            &__desc {
+                margin-bottom: 15px;
+        
+                h3 {
+                    @include mediaFontStyle(26, 40);
+                }
+                p {
+                    -webkit-line-clamp: 6;
+                }
+            }
+        }
+    }
 
     &__image {
         font-size: 0;
-        max-height: 250px;
+        max-height: 260px;
         border-radius: 6px;
+        height: 100%;
+        overflow: hidden;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+        flex-shrink: 0;
         
         img {
-            max-height: 250px;
-            border-radius: 6px;
+            max-height: 260px;
+            border-radius: 12px;
             object-fit: cover;
             height: 100%; 
             width: 100%;
         }
     }
 
-    &__desc {
+    &__content {
+        padding: 15px;
+        height: 100%;
+        @include flexBetween;
+        flex-direction: column;
+    }
 
+    &__desc {
+        margin-bottom: 15px;
+
+        h3 {
+            @include fontStyle(700, 20, 24, $black);
+            letter-spacing: 0.2px;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            @include fontStyle(600, 14, 20, $black);
+            letter-spacing: 0.1px;
+        }
+    }   
+
+    &__author {
+        @include flexCenter;
+        
+        &-avatar {
+            @include square(50px);
+            margin-right: 10px;
+        }
+
+        &-info {
+            h4 {
+                @include fontStyle(600, 14, 18, $black);
+                margin-bottom: 4px;
+            }
+            span {
+                @include fontStyle(400, 12, 16, $black);
+            }
+        }
     }
 }
