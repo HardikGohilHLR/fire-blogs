@@ -52,3 +52,24 @@ button { background: none; outline: none; border: none; }
 .fb_ellipsis-7 { -webkit-line-clamp: 7; }
 .fb_ellipsis-8 { -webkit-line-clamp: 8; }
 .fb_ellipsis-9 { -webkit-line-clamp: 9; }
+
+// Error
+.alert {
+    padding: 12px 20px;
+    margin-bottom: 15px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    @include fontStyle(500, 12, 16, $black);
+
+    &-error {
+        background-color: rgba($red, 0.2);
+        color: $red;
+        border-color: rgba($red, 0.4);
+    }
+
+    &-success {
+        background-color: rgba($green, 0.2);
+        color: $green;
+        border-color: rgba($green, 0.4);
+    }
+}

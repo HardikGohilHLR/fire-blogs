@@ -1,0 +1,28 @@
+// Form
+.fb_form-control {
+
+    margin-bottom: 20px;
+    width: 100%;
+    
+    label {
+        display: block;
+        margin-bottom: 5px;
+        @include fontStyle(600, 14, 16, #2c3e50);
+        letter-spacing: 0.5px;
+    }
+    
+    input {
+        display: block;
+        @include fontStyle(400, 16, 20, $black);
+        width: 100%;
+        padding: 10px 16px;
+        border-radius: 4px;
+        border: 1px solid #bdc3c7;
+    }
+
+    &-error {
+        display: block;
+        @include fontStyle(400, 12, 14, $red);
+        margin-top: 5px;
+    }
+}

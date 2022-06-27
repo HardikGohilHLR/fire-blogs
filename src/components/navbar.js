@@ -1,10 +1,15 @@
 /*
 ** Navbar
 */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useFireContext } from '../app-fire-blogs/fire-context';
 
 const Navbar = () => {
+
+    const _USER = useFireContext(e => e);
+
+    console.log('_USER', _USER);
     
     return (
         <React.Fragment>
@@ -19,10 +24,15 @@ const Navbar = () => {
                         </div>
                         
                         <nav>
-                            <div className="fb_header-btns">
-                                <Link to="/login" className="fb_btn fb_btn__theme"> Login </Link> 
-                                <Link to="/signup" className="fb_btn fb_btn__white"> Signup </Link> 
-                            </div>
+                            {
+                                _USER ? 
+                                <p>{_USER?.userInfo?.email}</p>
+                                :
+                                <div className="fb_header-btns">
+                                    <Link to="/login" className="fb_btn fb_btn__theme"> Login </Link> 
+                                    <Link to="/signup" className="fb_btn fb_btn__white"> Signup </Link> 
+                                </div>
+                            }
                         </nav>
                     </div>
 

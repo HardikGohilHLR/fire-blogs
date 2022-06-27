@@ -9,10 +9,14 @@ import './styles/index.scss';
 
 import { BrowserRouter } from 'react-router-dom';
 
+import { FireContextProvider } from './app-fire-blogs/fire-context';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
 	<BrowserRouter>
-		<App />
+		<FireContextProvider>
+			<App />
+		</FireContextProvider>
 	</BrowserRouter>,
 );
