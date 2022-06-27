@@ -4,12 +4,15 @@
 
 import React, { lazy } from 'react';
 
-import { Route, Routes } from "react-router-dom"; 
+import { Route, Routes } from "react-router-dom";
+import Footer from '../components/footer';
 
 // Components
-// import Navbar from "../components/navbar";
+import Navbar from "../components/navbar";
 
-const Home = lazy(() => import('./home/home'));
+// Routes
+const Home = lazy(() => import('./home'));
+const BlogDetail = lazy(() => import('./blog-detail'));
 
 // import Login from './auth/login';
 // import Signup from './auth/signup';
@@ -54,12 +57,18 @@ const FireBlogs = () => {
 
 	return (
         <React.Fragment>
+
+            {/* Navbar */}
+            <Navbar />
             
-            {/* <Navbar userData={user} userLogOut={userLogOut} /> */}
-            
+            {/* Content */}
             <Routes>
                 <Route exact path="/" element={<Home />} />
+                <Route exact path="/blog/:id" element={<BlogDetail />} />
             </Routes>
+
+            {/* Footer */}
+            <Footer />
         </React.Fragment>
 	)
 }

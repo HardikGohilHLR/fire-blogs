@@ -1,0 +1,11 @@
+// Footer
+
+footer {
+    background-color: $violet;
+    padding: 20px;
+    text-align: center;
+
+    p {
+        @include fontStyle(400, 16, 20, $white);
+    }
+}

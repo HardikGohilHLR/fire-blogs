@@ -1,0 +1,32 @@
+// Buttons
+.fb_btn {
+    padding: 10px 36px;
+    cursor: pointer;
+    outline: none;
+    border-radius: 4px;
+    @include fontStyle(600, 16, 20, $white);
+    border: 1px solid transparent;
+    transition: 0.2s linear;
+
+    &__theme {
+        background-color: $violet;
+        color: $white;
+        
+        &:hover {
+            background-color: $white;
+            border-color: $violet;
+            color: $violet;
+        }
+    }
+
+    &__white {
+        background-color: $white;
+        border-color: $black;
+        color: $black;
+        
+        &:hover {
+            background-color: $black;
+            color: $white;
+        }
+    }
+}

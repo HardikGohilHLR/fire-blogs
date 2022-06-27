@@ -1,40 +1,33 @@
 /*
 ** Navbar
 */
-
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-    // const db = fire.firestore();
-    // const location = useLocation();
-        
-    // const [navbarToggle, setNavbarToggle] = useState(false);
     
-    // const [user, setUser] = useState(false);
-
-    // useEffect(() => {
-    //     setNavbarToggle(false); 
-    // }, [location]);
-
-    // useEffect(async () => {              
-    //     const response = db.collection('users').doc(props?.userData?.uid);
-    //     const data = await response.get(); 
-    //     if(data.data()) {
-    //         setUser({
-    //             ...user,
-    //             id: data?.id,
-    //             username: data.data()?.username,
-    //             email: data.data()?.email,
-    //             isAdmin: data.data()?.isAdmin,
-    //             image: data.data()?.image
-    //         });
-    //     }
-    // }, [props?.userData]);
-
-
     return (
         <React.Fragment>
-            
+            <header>
+                <div className="fb_container">
+                    <div className="fb_header">
+
+                        <div className="fb_header-logo">
+                            <Link to="/">
+                                <img src="/images/fireblogs.svg" alt="Fireblogs" title="Fireblogs"/>    
+                            </Link> 
+                        </div>
+                        
+                        <nav>
+                            <div className="fb_header-btns">
+                                <button className="fb_btn fb_btn__theme"> Login </button> 
+                                <button className="fb_btn fb_btn__white"> Signup </button> 
+                            </div>
+                        </nav>
+                    </div>
+
+                </div>
+            </header>
             
         </React.Fragment>
     )

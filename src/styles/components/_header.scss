@@ -11,3 +11,18 @@
         letter-spacing: 0.8px;
     }
 }
+
+.fb_header {
+    @include flexCenterBetween;
+    padding: 20px 0;
+
+    &-logo {
+        max-width: 180px;
+    }
+
+    &-btns {
+        button {
+            margin-left: 10px;
+        }
+    }
+}
