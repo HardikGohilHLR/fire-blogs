@@ -20,8 +20,8 @@ const Navbar = () => {
                         
                         <nav>
                             <div className="fb_header-btns">
-                                <button className="fb_btn fb_btn__theme"> Login </button> 
-                                <button className="fb_btn fb_btn__white"> Signup </button> 
+                                <Link to="/login" className="fb_btn fb_btn__theme"> Login </Link> 
+                                <Link to="/signup" className="fb_btn fb_btn__white"> Signup </Link> 
                             </div>
                         </nav>
                     </div>

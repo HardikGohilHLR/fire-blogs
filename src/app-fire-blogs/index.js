@@ -2,7 +2,7 @@
 ** Main Component
 */
 
-import React, { lazy } from 'react';
+import React, { lazy, Suspense } from 'react';
 
 import { Route, Routes } from "react-router-dom";
 import Footer from '../components/footer';
@@ -13,13 +13,8 @@ import Navbar from "../components/navbar";
 // Routes
 const Home = lazy(() => import('./home'));
 const BlogDetail = lazy(() => import('./blog-detail'));
-
-// import Login from './auth/login';
-// import Signup from './auth/signup';
-// import Profile from './user/profile';
-// import AddBlog from './add-blog';
-// import BlogDetail from './blog-detail';
-// import BlogList from './admin/blog-list';
+const Login = lazy(() => import('./auth/login'));
+const Signup = lazy(() => import('./auth/signup'));
 
 const FireBlogs = () => {
     // const auth = fire.auth();
@@ -62,10 +57,17 @@ const FireBlogs = () => {
             <Navbar />
             
             {/* Content */}
-            <Routes>
-                <Route exact path="/" element={<Home />} />
-                <Route exact path="/blog/:id" element={<BlogDetail />} />
-            </Routes>
+            <Suspense fallback={<p>loading</p>}>
+
+                <Routes>
+                    <Route exact path="/" element={<Home />} />
+                    <Route exact path="/blog/:id" element={<BlogDetail />} />
+
+                    <Route exact path="/login" element={<Login />} />
+                    <Route exact path="/signup" element={<Signup />} />
+                
+                </Routes>
+            </Suspense>
 
             {/* Footer */}
             <Footer />
