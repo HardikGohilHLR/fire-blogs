@@ -15,6 +15,7 @@ const Home = lazy(() => import('./home'));
 const BlogDetail = lazy(() => import('./blog-detail'));
 const Login = lazy(() => import('./auth/login'));
 const Signup = lazy(() => import('./auth/signup'));
+const AddBlog = lazy(() => import('./add'));
 
 const FireBlogs = () => {
     
@@ -29,6 +30,7 @@ const FireBlogs = () => {
 
                 <Routes>
                     <Route exact path="/" element={<Home />} />
+                    <Route exact path="/blog/add" element={<AddBlog />} />
                     <Route exact path="/blog/:id" element={<BlogDetail />} />
 
                     <Route exact path="/login" element={<Login />} />

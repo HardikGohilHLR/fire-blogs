@@ -7,7 +7,7 @@ import React, { useState, useEffect } from 'react';
 import BlogCard from '../../components/blog-card';
 
 // Firebase
-import { db, collection, getDocs } from '../../firebase.config';
+import { db, collection, getDocs, query, orderBy } from '../../firebase.config';
 
 const Home = () => {
 
@@ -20,12 +20,16 @@ const Home = () => {
     // Fetch All blogs
     const fetchBlogs = async () => {
 
-        let blogsList = [];
+        let blogsList = [];        
         
-        const response = await getDocs(collection(db, "blogs"));
+        const queryRef = query(collection(db, 'blogs'), orderBy('date', 'desc'));
+        const response = await getDocs(queryRef);
+
         response.forEach((doc) => {
             blogsList?.push({id: doc.id, ...doc.data()});
         });
+
+        console.log('blogsList',blogsList);
         
         setAllBlogs(blogsList);
     }

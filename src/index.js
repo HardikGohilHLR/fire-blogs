@@ -6,6 +6,8 @@ import App from './App';
 
 // Styles
 import './styles/index.scss';
+import 'draft-js/dist/Draft.css';
+import '@draft-js-plugins/static-toolbar/lib/plugin.css';
 
 import { BrowserRouter } from 'react-router-dom';
 

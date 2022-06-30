@@ -61,9 +61,7 @@ const BlogDetail = () => {
 
                         </div>
 
-                        <div className="fb_blog-details__content">
-                            <p>{blog?.content}</p>
-                        </div>
+                        <div className="fb_blog-details__content" dangerouslySetInnerHTML={{ __html: blog?.content}} />
                     </div>
                 </div>
             </div>
