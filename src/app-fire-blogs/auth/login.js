@@ -3,6 +3,7 @@
 */
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Packages
 import { useFormik } from 'formik';
@@ -10,8 +11,12 @@ import * as Yup from 'yup';
 
 // Firebase
 import { auth, signInWithEmailAndPassword } from '../../firebase.config';
+import { useFireContext } from '../fire-context';
 
 const Login = () => {
+
+    const navigate = useNavigate();
+    const _USER = useFireContext(e => e?.userInfo);
 
     const [formMessages, setFormMessages] = useState('');
 
@@ -21,8 +26,13 @@ const Login = () => {
                 setFormMessages(null)
             }, 5000);
         }
-
     }, [formMessages]);
+
+    useEffect(() => {
+        if(_USER?.email) {
+            navigate('/');
+        }
+    }, [_USER]);
 
     const formik = useFormik({
         initialValues: {
@@ -40,8 +50,8 @@ const Login = () => {
         onSubmit: values => {
             signInWithEmailAndPassword(auth, values?.email, values?.password)
             .then((userCredential) => {
-                console.log('userCredential', userCredential);
                 setFormMessages({type: 'success', message: 'Redirecting...'});
+                navigate('/');
             })
             .catch((error) => {
                 setFormMessages({type: 'error', message: error?.message});

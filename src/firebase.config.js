@@ -1,7 +1,8 @@
 // Firebase config
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, doc, setDoc, getDoc } from "firebase/firestore";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged  } from "firebase/auth";
+import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, orderBy, limit } from "firebase/firestore";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -19,7 +20,9 @@ const auth = getAuth();
 
 export { 
     db, collection, getDocs, doc, setDoc, getDoc, auth, 
-    signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged 
+    query, orderBy, limit,
+    signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut,
+    getStorage, ref, uploadBytes, getDownloadURL
 };
 
 export default fire;

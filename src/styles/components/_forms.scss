@@ -26,3 +26,16 @@
         margin-top: 5px;
     }
 }
+
+.fb_button-control {
+    padding-bottom: 30px;
+}
+
+.draft-editor {
+    display: block;
+    @include fontStyle(400, 16, 20, $black);
+    width: 100%;
+    padding: 10px 16px;
+    border-radius: 4px;
+    border: 1px solid #bdc3c7;
+}

@@ -21,6 +21,8 @@
     }
 
     &-btns {
+        display: flex;
+        align-items: center;
         a {
             margin-left: 10px;
         }

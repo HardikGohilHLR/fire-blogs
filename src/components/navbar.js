@@ -1,15 +1,23 @@
 /*
 ** Navbar
 */
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
 import { useFireContext } from '../app-fire-blogs/fire-context';
 
+import { auth, signOut } from '../firebase.config'; 
+
 const Navbar = () => {
+    const navigate = useNavigate();
 
-    const _USER = useFireContext(e => e);
-
-    console.log('_USER', _USER);
+    const _USER = useFireContext(e => e?.userInfo);
+    
+    const logout = () => {
+        signOut(auth).then(() => {
+            navigate('/login');
+        });
+    }
     
     return (
         <React.Fragment>
@@ -23,16 +31,22 @@ const Navbar = () => {
                             </Link> 
                         </div>
                         
-                        <nav>
-                            {
-                                _USER ? 
-                                <p>{_USER?.userInfo?.email}</p>
-                                :
-                                <div className="fb_header-btns">
-                                    <Link to="/login" className="fb_btn fb_btn__theme"> Login </Link> 
-                                    <Link to="/signup" className="fb_btn fb_btn__white"> Signup </Link> 
-                                </div>
-                            }
+                        <nav>                            
+                            <div className="fb_header-btns">
+                                {                                        
+                                    _USER?.email ? 
+                                    <>
+                                        <p>{_USER?.email}</p>  
+                                        <button className="fb_btn fb_btn__white" onClick={logout}> Logout </button> 
+                                        <Link to="/blog/add" className="fb_btn fb_btn__theme"> Add Blog </Link> 
+                                    </>
+                                    :
+                                    <>
+                                        <Link to="/login" className="fb_btn fb_btn__theme"> Login </Link> 
+                                        <Link to="/signup" className="fb_btn fb_btn__white"> Signup </Link> 
+                                    </>
+                                }
+                            </div>                            
                         </nav>
                     </div>
 

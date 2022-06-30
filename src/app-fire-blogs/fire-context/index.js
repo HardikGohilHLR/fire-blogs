@@ -13,14 +13,11 @@ const initialState = {
 const loginReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'SET_USERINFO': 
-            console.log('action?.payload?.userInfo', action?.payload?.userInfo);
-            const { email } = action?.payload?.userInfo;
-            
             return { 
                 ...state, 
                 userInfo: {
                     ...state.userInfo,
-                    email: email
+                    email: action?.payload?.userInfo?.email
                 }
             };
         case 'LOGIN': 
@@ -28,7 +25,7 @@ const loginReducer = (state = initialState, action) => {
         case 'LOGOUT': 
             return {};
         default:
-            return;
+            return state;
     }
 }
 

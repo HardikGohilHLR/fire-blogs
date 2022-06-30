@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 
 import AppFireBlogs from "./app-fire-blogs";
 
-import { FireContextProvider, useFireUpdateContext } from './app-fire-blogs/fire-context';
+import { useFireUpdateContext } from './app-fire-blogs/fire-context';
 
 // Firebase
 import { auth, onAuthStateChanged } from './firebase.config';
@@ -17,12 +17,12 @@ const App = () => {
         onAuthStateChanged(auth, (user) => {
             dispatch({type: 'SET_USERINFO', payload: { userInfo: user }});
         });
-    }, []);
+    }, [dispatch]);
 
 	return (
-		<FireContextProvider>
-			<AppFireBlogs />
-		</FireContextProvider>
+        <React.Fragment>
+		    <AppFireBlogs />
+        </React.Fragment>
 	)
 }
 

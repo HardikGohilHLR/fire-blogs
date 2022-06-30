@@ -44,8 +44,7 @@ const Signup = () => {
         }),
         onSubmit: values => {
             createUserWithEmailAndPassword(auth, values?.email, values?.password)
-            .then((userCredential) => {
-                console.log('userCredential', userCredential);
+            .then(() => {
                 setFormMessages({type: 'success', message: 'Redirecting...'});
                 navigate('/');
             })
