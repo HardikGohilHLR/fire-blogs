@@ -1,23 +1,36 @@
 /*
 ** Navbar
 */
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { useFireContext } from '../app-fire-blogs/fire-context';
+import { useOutsideClick } from '../common/hooks/useOusideClick';
 
 import { auth, signOut } from '../firebase.config'; 
+import Avatar from './avatar';
 
 const Navbar = () => {
+
     const navigate = useNavigate();
+    const optionsRef = useRef();
+    const location = useLocation();
 
     const _USER = useFireContext(e => e?.userInfo);
+
+    useEffect(() => {
+        setUserOptions(false);
+    }, [location]);    
+
+    const [userOptions, setUserOptions] = useState(false);
     
     const logout = () => {
         signOut(auth).then(() => {
             navigate('/login');
         });
     }
+    
+    useOutsideClick(optionsRef, () => { setUserOptions(false); });
     
     return (
         <React.Fragment>
@@ -32,12 +45,40 @@ const Navbar = () => {
                         </div>
                         
                         <nav>                            
+                            {
+                                _USER?.email &&
+                                <div className="fb_user-info" ref={optionsRef}>
+
+                                    <div className="fb_user-info__desc" onClick={() => setUserOptions(!userOptions)}>
+
+                                        <Avatar user={_USER} />
+
+                                        <div className="fb_user-info__details">
+                                            <p className="fb_ellipsis fb_ellipsis-1">{_USER?.username || 'John Doe'}</p>
+                                            <span className="fb_ellipsis fb_ellipsis-1">{_USER?.email}</span>
+                                        </div>
+
+                                    </div>
+
+                                    {
+                                        userOptions &&
+                                        <div className="fb_user-info-options">
+                                            <ul>
+                                                <li>
+                                                    <Link to="/profile">Profile</Link>
+                                                </li>
+                                                <li onClick={logout}>
+                                                    <span>Logout</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    }
+                                </div>
+                            }
                             <div className="fb_header-btns">
                                 {                                        
                                     _USER?.email ? 
                                     <>
-                                        <p>{_USER?.email}</p>  
-                                        <button className="fb_btn fb_btn__white" onClick={logout}> Logout </button> 
                                         <Link to="/blog/add" className="fb_btn fb_btn__theme"> Add Blog </Link> 
                                     </>
                                     :

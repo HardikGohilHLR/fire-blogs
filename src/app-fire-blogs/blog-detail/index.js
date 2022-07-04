@@ -45,7 +45,7 @@ const BlogDetail = () => {
                     <div className="fb_blog-details__wpr">
 
                         <div className="fb_blog-details__image">
-                            <img src={blog?.blogImage} alt={blog?.title} title={blog?.title}/>
+                            <img src={blog?.image} alt={blog?.title} title={blog?.title}/>
                         </div>
 
                         <div className="fb_blog-post__author">
