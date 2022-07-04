@@ -27,6 +27,8 @@ button { background: none; outline: none; border: none; }
 
 .fb_container { max-width: 1240px; width: 100%; margin: 0 auto; padding: 0 20px; }
 
+.fb_block { display: block; } 
+
 // Flex Classes
 .fb_flex { display: flex; } 
 .fb_flex-column { flex-direction: column; } 
@@ -72,4 +74,31 @@ button { background: none; outline: none; border: none; }
         color: $green;
         border-color: rgba($green, 0.4);
     }
+}
+
+// Skeleton
+.fb_skeleton {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    background-color: #DDDBDD;
+
+    &.round {
+        border-radius: 50%;
+    }
+
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transform: translateX(-100%);
+        background-image: linear-gradient(90deg, rgba($white, 0) 0, rgba($white, 0.2) 20%, rgba($white, 0.5) 60%, rgba($white, 0));
+        animation: shimmer 2s infinite;
+    }
+}
+@keyframes shimmer {
+    100% { transform: translateX(100%); }
 }

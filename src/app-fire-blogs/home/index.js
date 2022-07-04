@@ -11,7 +11,8 @@ import { db, collection, getDocs, query, orderBy } from '../../firebase.config';
 
 const Home = () => {
 
-    const [allBlogs, setAllBlogs] = useState([]);
+    const [allBlogs, setAllBlogs] = useState([...Array(10).fill('')]);
+    const [dataLoading, setDataLoading] = useState(true);
     
     useEffect(() => {
         fetchBlogs();
@@ -20,7 +21,7 @@ const Home = () => {
     // Fetch All blogs
     const fetchBlogs = async () => {
 
-        let blogsList = [];        
+        let blogsList = [];
         
         const queryRef = query(collection(db, 'blogs'), orderBy('date', 'desc'));
         const response = await getDocs(queryRef);
@@ -28,10 +29,9 @@ const Home = () => {
         response.forEach((doc) => {
             blogsList?.push({id: doc.id, ...doc.data()});
         });
-
-        console.log('blogsList',blogsList);
         
         setAllBlogs(blogsList);
+        setDataLoading(false);
     }
 
     return (
@@ -47,10 +47,11 @@ const Home = () => {
                     {
                         allBlogs?.map(blog => {
                             return (
-                                <BlogCard blogData={blog} key={blog?.id}/>
+                                <BlogCard blogData={blog} key={blog?.id} dataLoading={dataLoading} />
                             )
                         })
                     }
+                    
                     </div>
                 </div>
             </div>
@@ -58,4 +59,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default Home;
