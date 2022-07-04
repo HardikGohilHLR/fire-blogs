@@ -42,13 +42,13 @@
     }
 
     &__theme {
-        background-color: $violet;
+        background-color: $blue;
         color: $white;
         
         &:hover {
             background-color: $white;
-            border-color: $violet;
-            color: $violet;
+            border-color: $blue;
+            color: $blue;
         }
     }
 
