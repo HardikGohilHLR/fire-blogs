@@ -60,7 +60,6 @@ const BlogEditor = ({content, onChange}) => {
                             <BoldButton {...externalProps} {...overrideProps}/>
                             <ItalicButton {...externalProps} {...overrideProps}/>
                             <UnderlineButton {...externalProps} {...overrideProps}/>
-                            <CodeBlockButton {...externalProps} {...overrideProps}/>
                             <UnorderedListButton {...externalProps} {...overrideProps}/>
                             <OrderedListButton {...externalProps} {...overrideProps}/> 
                         </div>

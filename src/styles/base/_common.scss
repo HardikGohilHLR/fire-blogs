@@ -37,6 +37,19 @@ h4 { @include fontStyle(600, 24, 30, $black); letter-spacing: 0.8px; }
 strong { font-weight: 700 !important; }
 em { font-style: italic !important; }
 
+
+.fb_layout {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.fb_content {
+    overflow-y: auto;
+    flex: 1 0;
+}
+
 .fb_container { max-width: 1240px; width: 100%; margin: 0 auto; padding: 0 20px; }
 
 .fb_block { display: block; } 

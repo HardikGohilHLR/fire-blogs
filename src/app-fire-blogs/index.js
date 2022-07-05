@@ -21,26 +21,33 @@ const FireBlogs = () => {
     
 	return (
         <React.Fragment>
-            
-            {/* Navbar */}
-            <Navbar />
-            
-            {/* Content */}
-            <Suspense fallback={<p>loading</p>}>
-
-                <Routes>
-                    <Route exact path="/" element={<Home />} />
-                    <Route exact path="/blog/add" element={<AddBlog />} />
-                    <Route exact path="/blog/:id" element={<BlogDetail />} />
-
-                    <Route exact path="/login" element={<Login />} />
-                    <Route exact path="/signup" element={<Signup />} />
+            <div className="fb_layout">
                 
-                </Routes>
-            </Suspense>
+                {/* Navbar */}
+                <Navbar />
+            
+                <div className="fb_content">
 
-            {/* Footer */}
-            <Footer />
+                    {/* Content */}
+                    <Suspense fallback={<p>loading</p>}>
+
+                        <Routes>
+                            <Route exact path="/" element={<Home />} />
+                            <Route exact path="/blog/add" element={<AddBlog />} />
+                            <Route exact path="/blog/:id" element={<BlogDetail />} />
+
+                            <Route exact path="/login" element={<Login />} />
+                            <Route exact path="/signup" element={<Signup />} />
+                        
+                        </Routes>
+                    </Suspense>
+                
+                </div>
+
+                {/* Footer */}
+                <Footer />
+            </div>
+
         </React.Fragment>
 	)
 }
