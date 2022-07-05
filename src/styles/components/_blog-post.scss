@@ -12,6 +12,13 @@
     display: flex;
     flex-direction: column;
     cursor: pointer;
+    border-radius: 6px;
+    overflow: hidden;
+    transition: 0.2s linear;
+
+    &:hover {
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+    }
 
     // &:first-child {
     //     grid-column: 1 / span 3;
@@ -47,6 +54,7 @@
         overflow: hidden;
         box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
         flex-shrink: 0;
+        margin-bottom: 5px;
         
         img {
             max-height: 260px;
@@ -83,7 +91,6 @@
         @include flexCenter;
         
         &-avatar {
-            @include square(50px);
             margin-right: 10px;
         }
 

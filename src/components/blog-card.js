@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getUserImage, formatDate } from '../common/functions';
+import Avatar from './avatar';
 
 import Skeleton from './skeleton';
 
@@ -20,7 +21,7 @@ const BlogCard = ({blogData, dataLoading}) => {
     
     return (
         <React.Fragment>
-            <div className="fb_blog-post" onClick={viewBlog}>
+            <div className="fb_blog-post" onClick={() => !dataLoading && viewBlog()}>
                 {
                     dataLoading ? <BlogCardSkeleton /> :
 
@@ -39,7 +40,7 @@ const BlogCard = ({blogData, dataLoading}) => {
                             <div className="fb_blog-post__author">
                                 
                                 <div className="fb_blog-post__author-avatar">
-                                    <img src={getUserImage(user)} alt="Placeholder" />
+                                    <Avatar user={user} size={45} />
                                 </div>
 
                                 <div className="fb_blog-post__author-info">

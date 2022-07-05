@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 // Packages
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { EditorState } from 'draft-js';
 
 import BlogEditor from './components/editor';
 
@@ -17,6 +18,8 @@ const AddBlog = () => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [formMessages, setFormMessages] = useState('');
+
+    const [editorState, ] = useState(EditorState.createEmpty());
 
     useEffect(() => {
         if(formMessages) {
@@ -48,13 +51,6 @@ const AddBlog = () => {
         }),
         onSubmit: values => {
             setIsLoading(true);
-
-            
-            formik.setFieldValue('content', '');
-            formik.setFieldValue('image', '');
-            formik.handleReset();
-
-            return
 
             const storageRef = ref(storage, `images/${values?.image?.name}`);
             uploadBytes(storageRef, values?.image).then(() => {
@@ -124,7 +120,7 @@ const AddBlog = () => {
 
                         <div className="fb_form-control">
                             <label>Content</label>
-                            <BlogEditor onChange={handle.change} /> 
+                            <BlogEditor content={editorState} onChange={handle.change} /> 
                         </div>
 
                         <div className="fb_form-control fb_file-control">

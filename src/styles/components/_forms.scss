@@ -38,4 +38,9 @@
     padding: 10px 16px;
     border-radius: 4px;
     border: 1px solid #bdc3c7;
+    min-height: 200px;
+    
+    .public-DraftEditor-content {
+        min-height: 200px;
+    }
 }

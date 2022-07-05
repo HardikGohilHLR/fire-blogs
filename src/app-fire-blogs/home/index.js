@@ -43,16 +43,21 @@ const Home = () => {
                         <h1>Blogs</h1>
                     </div>
 
-                    <div className="fb_blog-list">
                     {
-                        allBlogs?.map(blog => {
-                            return (
-                                <BlogCard blogData={blog} key={blog?.id} dataLoading={dataLoading} />
-                            )
-                        })
+                        allBlogs?.length !== 0 ?
+                        <div className="fb_blog-list">
+                            {
+                                allBlogs?.map(blog => {
+                                    return (
+                                        <BlogCard blogData={blog} key={blog?.id} dataLoading={dataLoading} />
+                                    )
+                                })
+                            }
+                        </div>
+                        :
+                        <h4 className="fb_text-center pb-40 pt-30">No Data Found.</h4>
                     }
-                    
-                    </div>
+
                 </div>
             </div>
         </React.Fragment>

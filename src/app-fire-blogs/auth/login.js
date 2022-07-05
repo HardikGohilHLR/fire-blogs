@@ -64,6 +64,10 @@ const Login = () => {
             <div className="fb_container">
                 <div className="fb_auth">
 
+                    <div className="mb-40">
+                        <h1>Login</h1>
+                    </div>
+
                     {
                         formMessages &&
                         <div className={`alert alert-${formMessages?.type}`}>

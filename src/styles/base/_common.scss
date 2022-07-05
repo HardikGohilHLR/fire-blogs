@@ -7,6 +7,12 @@ img { width: 100%; font-size: 0; }
 input { outline: none; }
 button { background: none; outline: none; border: none; }
 
+body, * {
+	&::-webkit-scrollbar { width: 4px; height: 4px; }
+	&::-webkit-scrollbar-track { background: rgba(#bdc3c7, 0.5); }
+	&::-webkit-scrollbar-thumb { background: #0b2854; }
+}
+
 // Fonts
 @font-face {
     font-family: $gilroy-font;
@@ -25,6 +31,12 @@ button { background: none; outline: none; border: none; }
     src: url('../fonts/Gilroy-Bold.woff') format('woff');
 }
 
+h1 { @include fontStyle(700, 32, 44, $black); letter-spacing: 0.8px; }
+h4 { @include fontStyle(600, 24, 30, $black); letter-spacing: 0.8px; }
+
+strong { font-weight: 700 !important; }
+em { font-style: italic !important; }
+
 .fb_container { max-width: 1240px; width: 100%; margin: 0 auto; padding: 0 20px; }
 
 .fb_block { display: block; } 
@@ -42,7 +54,6 @@ button { background: none; outline: none; border: none; }
 
 // Grid CSS  
 .fb_row { display: flex; flex-wrap: wrap; margin: 0 -10px; }
-
 
 .fb_ellipsis { display: block; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; }
 .fb_ellipsis-1 { -webkit-line-clamp: 1; }

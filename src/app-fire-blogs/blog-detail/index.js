@@ -10,6 +10,7 @@ import { db, doc, getDoc } from '../../firebase.config';
 
 import { getUserImage, formatDate } from '../../common/functions';
 import Skeleton from '../../components/skeleton';
+import Avatar from '../../components/avatar';
 
 const BlogDetail = () => {
     
@@ -65,7 +66,7 @@ const BlogDetail = () => {
                                 {
                                     dataLoading ? 
                                     <Skeleton width="50px" height="50px" round /> :
-                                    <img src={getUserImage(user)} alt="Placeholder" />
+                                    <Avatar user={user} size={40} />
                                 }
                             </div>
 

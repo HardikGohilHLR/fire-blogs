@@ -51,7 +51,7 @@ const Navbar = () => {
 
                                     <div className="fb_user-info__desc" onClick={() => setUserOptions(!userOptions)}>
 
-                                        <Avatar user={_USER} />
+                                        <Avatar user={_USER} size={40} />
 
                                         <div className="fb_user-info__details">
                                             <p className="fb_ellipsis fb_ellipsis-1">{_USER?.username || 'John Doe'}</p>
@@ -79,7 +79,10 @@ const Navbar = () => {
                                 {                                        
                                     _USER?.email ? 
                                     <>
-                                        <Link to="/blog/add" className="fb_btn fb_btn__theme"> Add Blog </Link> 
+                                        {
+                                            !location?.pathname?.includes('/add') &&
+                                            <Link to="/blog/add" className="fb_btn fb_btn__theme"> Add Blog </Link> 
+                                        }
                                     </>
                                     :
                                     <>
