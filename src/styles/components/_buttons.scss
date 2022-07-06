@@ -41,6 +41,11 @@
         }
     }
 
+    &.small {
+        @include mediaFontStyle(14, 16);
+        padding: 10px 25px;
+    }
+
     &__theme {
         background-color: $blue;
         color: $white;

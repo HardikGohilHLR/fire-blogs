@@ -4,9 +4,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getUserImage, formatDate } from '../common/functions';
-import Avatar from './avatar';
+import { formatDate } from '../common/functions';
 
+import Avatar from './avatar';
 import Skeleton from './skeleton';
 
 const BlogCard = ({blogData, dataLoading}) => {  

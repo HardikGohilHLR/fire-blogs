@@ -6,7 +6,7 @@ import { EditorState, convertToRaw, convertFromHTML, ContentState } from 'draft-
 import draftToHtml from 'draftjs-to-html';
 
 import Editor from '@draft-js-plugins/editor';
-import { BoldButton, CodeBlockButton, ItalicButton, OrderedListButton, UnderlineButton, UnorderedListButton, } from '@draft-js-plugins/buttons';
+import { BoldButton, ItalicButton, OrderedListButton, UnderlineButton, UnorderedListButton, } from '@draft-js-plugins/buttons';
 import createToolbarPlugin from '@draft-js-plugins/static-toolbar';
 
 const BlogEditor = ({content, onChange}) => {

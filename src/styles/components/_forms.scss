@@ -3,6 +3,14 @@
 
     margin-bottom: 20px;
     width: 100%;
+
+    &-half {
+        @include flexBetween;
+
+        .fb_form-control {
+            max-width: calc(50% - 10px);
+        }
+    }
     
     label {
         display: block;
@@ -29,6 +37,56 @@
 
 .fb_button-control {
     padding-bottom: 30px;
+}
+
+.fb_form-image {
+    margin-bottom: 40px; 
+    position: relative;
+    cursor: pointer;
+    @include square(120px);
+
+    &:hover {
+        .fb_form-image-edit {
+            opacity: 1;
+        }   
+    }
+
+    label {
+        position: absolute;
+        @include square(100%);
+        opacity: 0;
+        top: 0;
+        left: 0;
+        cursor: pointer;
+        z-index: 5;
+    }
+
+    &-preview {
+        overflow: hidden;
+        border-radius: 50%;
+        font-size: 0;
+
+        img {
+            @include square(120px);
+            object-fit: cover;
+        }
+    }
+
+    &-edit {
+        @include square(100%);
+        position: absolute;
+        top: 0;
+        left: 0;
+        @include flexCenterCenter;
+        border-radius: 50%;
+        opacity: 0;
+        transition: 0.25 linear;
+        background-color: rgba($black, 0.4);
+
+        svg {
+            @include square(20px);            
+        }
+    }
 }
 
 .draft-editor {
