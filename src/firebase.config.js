@@ -1,6 +1,6 @@
 // Firebase config
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, orderBy, limit, where } from "firebase/firestore";
+import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, orderBy, limit, updateDoc, where } from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
@@ -20,7 +20,7 @@ const auth = getAuth();
 
 export { 
     db, collection, getDocs, doc, setDoc, getDoc, auth, 
-    query, orderBy, limit, where,
+    query, orderBy, limit, where, updateDoc,
     signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut,
     getStorage, ref, uploadBytes, getDownloadURL
 };

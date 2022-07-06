@@ -17,6 +17,7 @@ const loginReducer = (state = initialState, action) => {
                 ...state, 
                 userInfo: {
                     ...state.userInfo,
+                    _id: action?.payload?.userInfo?.userId,
                     id: action?.payload?.userInfo?.uid,
                     email: action?.payload?.userInfo?.email,
                     username: action?.payload?.userInfo?.username,

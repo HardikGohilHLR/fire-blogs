@@ -4,12 +4,14 @@
 
 import React, { useState, useEffect } from 'react';
 
+import { useFireContext } from '../fire-context';
+
 // Packages
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 // Firebase
-import { useFireContext } from '../fire-context';
+import { db, getStorage, ref, uploadBytes, getDownloadURL, doc, updateDoc } from '../../firebase.config';
 
 import Avatar from '../../components/avatar';
 
@@ -17,8 +19,11 @@ const Profile = () => {
 
     const _USER = useFireContext(e => e?.userInfo);
 
+    const storage = getStorage();
+
     const [formMessages, setFormMessages] = useState('');
     const [isChange, setIsChange] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if(formMessages) {
@@ -32,7 +37,7 @@ const Profile = () => {
         initialValues: {
             email: _USER?.email,
             username: _USER?.username,
-            profileImage: _USER?.profileImage,
+            profileImage: '',
         },
         enableReinitialize: true,
         validationSchema: Yup.object({
@@ -43,8 +48,34 @@ const Profile = () => {
             .min(6, 'Must be at least 6 characters or more.')
             .required('Username is required.')
         }),
-        onSubmit: values => {
-            console.log('values', values);
+        onSubmit: async (values) => {
+
+            setIsLoading(true);
+
+            const storageRef = ref(storage, `images/${values?.profileImage?.name}`);
+            uploadBytes(storageRef, values?.profileImage).then(() => {
+                setIsLoading(true);
+
+                getDownloadURL(ref(storage, `images/${values?.profileImage?.name}`))
+                .then(async (url) => {
+                    await updateDoc(doc(db, "users", _USER?._id), {
+                        username: values?.username,
+                        profileImage: url
+                    });
+  
+                    setIsLoading(false);
+                    setFormMessages({type: 'success', message: 'Profile Updated successfully!'});
+                    formik.handleReset();
+                })
+                .catch(error => {
+                    setIsLoading(false);
+                    setFormMessages({type: 'error', message: error?.message});
+                });
+            }).catch(error => {
+                setIsLoading(false);
+                setFormMessages({type: 'error', message: error?.message});
+            });
+              
         },
     });
 
@@ -63,10 +94,6 @@ const Profile = () => {
             <div className="fb_container">
                 <div className="pt-50">
 
-                    <div className="mb-10">
-                        <h1>My Profile</h1>
-                    </div>
-
                     {
                         formMessages &&
                         <div className={`alert alert-${formMessages?.type}`}>
@@ -77,18 +104,23 @@ const Profile = () => {
 
                     <form onSubmit={formik.handleSubmit}>
                         
-                        {
-                            isChange &&
-                            <div className="fb_button-control fb_flex fb_content-end">
-                                <button className="fb_btn fb_btn__white small" type="submit">Cancel</button>
-                                <button className="fb_btn fb_btn__theme small ml-10" type="submit">Save</button>
-                            </div>
-                        }
+                        <div className="mb-10 fb_flex fb_align-center fb_content-between">
+
+                            <h1 className="mb-10">My Profile</h1>
+
+                            {
+                                isChange &&
+                                <div className="fb_button-control fb_flex fb_content-end">
+                                    <button className="fb_btn fb_btn__white small" type="submit">Cancel</button>
+                                    <button className={`fb_btn fb_btn__theme ml-10 ${isLoading ? 'loading' : ''}`} type="submit">Save</button>
+                                </div>
+                            }
+                        </div>
 
                         <div className="fb_form-image">
                             {
-                                formik?.values?.profileImage ?
-                                <div className="fb_form-profileImage-preview">
+                                formik?.values?.profileImage !== '' ?
+                                <div className="fb_form-image-preview">
                                     <img src={URL.createObjectURL(formik?.values?.profileImage)} alt="User" />
                                 </div>
                                 :
@@ -127,6 +159,7 @@ const Profile = () => {
                                 <input
                                     id="email"
                                     name="email"
+                                    disabled
                                     type="text"
                                     onChange={formik.handleChange}
                                     value={formik?.values?.email || ''}
