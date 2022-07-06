@@ -54,7 +54,7 @@ const Navbar = () => {
                                         <Avatar user={_USER} size={40} />
 
                                         <div className="fb_user-info__details">
-                                            <p className="fb_ellipsis fb_ellipsis-1">{_USER?.username || 'John Doe'}</p>
+                                            <p className="fb_ellipsis fb_ellipsis-1">{_USER?.username}</p>
                                             <span className="fb_ellipsis fb_ellipsis-1">{_USER?.email}</span>
                                         </div>
 

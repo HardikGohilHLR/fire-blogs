@@ -31,8 +31,8 @@ const Profile = () => {
     const formik = useFormik({
         initialValues: {
             email: _USER?.email,
-            username: '',
-            image: '',
+            username: _USER?.username,
+            profileImage: _USER?.profileImage,
         },
         enableReinitialize: true,
         validationSchema: Yup.object({
@@ -43,9 +43,6 @@ const Profile = () => {
             .min(6, 'Must be at least 6 characters or more.')
             .required('Username is required.')
         }),
-        isSubmitting: () => {
-            console.log('changte');
-        },        
         onSubmit: values => {
             console.log('values', values);
         },
@@ -57,7 +54,7 @@ const Profile = () => {
 
     const handle = {
         change: (e) => { 
-            formik.setFieldValue('image', e?.target?.files[0]);
+            formik.setFieldValue('profileImage', e?.target?.files[0]);
         },
     }
 
@@ -90,16 +87,16 @@ const Profile = () => {
 
                         <div className="fb_form-image">
                             {
-                                formik?.values?.image !== '' ?
-                                <div className="fb_form-image-preview">
-                                    <img src={URL.createObjectURL(formik?.values?.image)} alt="User" />
+                                formik?.values?.profileImage ?
+                                <div className="fb_form-profileImage-preview">
+                                    <img src={URL.createObjectURL(formik?.values?.profileImage)} alt="User" />
                                 </div>
                                 :
                                 <Avatar user={_USER} size={120} />
                             }
 
-                            <label htmlFor="image">
-                                <input type="file" id="image" name="image" value={formik?.values?.image || ''} onChange={handle.change} />
+                            <label htmlFor="profileImage">
+                                <input type="file" id="profileImage" name="profileImage" onChange={handle.change} />
                             </label>
 
                             <div className="fb_form-image-edit">

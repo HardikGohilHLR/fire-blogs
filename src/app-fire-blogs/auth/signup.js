@@ -9,7 +9,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 // Firebase
-import { auth, createUserWithEmailAndPassword } from '../../firebase.config';
+import { auth, createUserWithEmailAndPassword, db, collection, setDoc, doc } from '../../firebase.config';
 
 const Signup = () => {
 
@@ -44,7 +44,16 @@ const Signup = () => {
         }),
         onSubmit: values => {
             createUserWithEmailAndPassword(auth, values?.email, values?.password)
-            .then(() => {
+            .then(async (user) => {
+                const usersRef = doc(collection(db, 'users'));
+            
+                await setDoc(usersRef, { 
+                    id: user?.user?.uid,
+                    email: values?.email,
+                    username: values?.username,
+                    profileImage: ''
+                });
+
                 setFormMessages({type: 'success', message: 'Redirecting...'});
                 navigate('/');
             })
