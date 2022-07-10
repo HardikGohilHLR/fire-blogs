@@ -4,6 +4,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
+import { useFireContext } from '../fire-context';
+
 // Packages
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -14,8 +16,16 @@ import { auth, createUserWithEmailAndPassword, db, collection, setDoc, doc } fro
 const Signup = () => {
 
     const navigate = useNavigate();
+    const _USER = useFireContext(e => e?.userInfo);
 
     const [formMessages, setFormMessages] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        if(_USER?.email) {
+            navigate('/');
+        }
+    }, [_USER]);
 
     useEffect(() => {
         if(formMessages) {
@@ -43,6 +53,7 @@ const Signup = () => {
             .required('Password is required.')
         }),
         onSubmit: values => {
+            setIsLoading(true);
             createUserWithEmailAndPassword(auth, values?.email, values?.password)
             .then(async (user) => {
                 const usersRef = doc(collection(db, 'users'));
@@ -55,9 +66,11 @@ const Signup = () => {
                 });
 
                 setFormMessages({type: 'success', message: 'Redirecting...'});
+                setIsLoading(false);
                 navigate('/');
             })
             .catch((error) => {
+                setIsLoading(false);
                 setFormMessages({type: 'error', message: error?.message});
             })
         },
@@ -126,7 +139,7 @@ const Signup = () => {
                         </div>
 
                         <div className="fb_button-control">
-                            <button className="fb_btn fb_btn__theme" type="submit">Submit</button>
+                            <button className={`fb_btn fb_btn__theme ${isLoading ? 'loading' : ''}`} type="submit">Submit</button>
                         </div>
 
                     </form>

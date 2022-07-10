@@ -19,6 +19,7 @@ const Login = () => {
     const _USER = useFireContext(e => e?.userInfo);
 
     const [formMessages, setFormMessages] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if(formMessages) {
@@ -48,12 +49,15 @@ const Login = () => {
             .required('Password is required.')
         }),
         onSubmit: values => {
+            setIsLoading(true);
             signInWithEmailAndPassword(auth, values?.email, values?.password)
-            .then((userCredential) => {
+            .then(() => {
+                setIsLoading(false);
                 setFormMessages({type: 'success', message: 'Redirecting...'});
                 navigate('/');
             })
             .catch((error) => {
+                setIsLoading(false);
                 setFormMessages({type: 'error', message: error?.message});
             })
         },
@@ -108,7 +112,7 @@ const Login = () => {
                         </div>
 
                         <div className="fb_button-control">
-                            <button className="fb_btn fb_btn__theme" type="submit">Login</button>
+                            <button className={`fb_btn fb_btn__theme ${isLoading ? 'loading' : ''}`} type="submit">Login</button>
                         </div>
 
                     </form>

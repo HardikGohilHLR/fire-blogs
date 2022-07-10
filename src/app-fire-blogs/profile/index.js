@@ -4,7 +4,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { useFireContext } from '../fire-context';
+import { useFireContext, useFireUpdateContext } from '../fire-context';
 
 // Packages
 import { useFormik } from 'formik';
@@ -14,10 +14,12 @@ import * as Yup from 'yup';
 import { db, getStorage, ref, uploadBytes, getDownloadURL, doc, updateDoc } from '../../firebase.config';
 
 import Avatar from '../../components/avatar';
+import { onSnapshot } from 'firebase/firestore';
 
 const Profile = () => {
 
     const _USER = useFireContext(e => e?.userInfo);
+    const dispatch = useFireUpdateContext();
 
     const storage = getStorage();
 
@@ -85,6 +87,10 @@ const Profile = () => {
         setIsLoading(false);
         setFormMessages({type: 'success', message: 'Profile Updated successfully!'});
         formik.handleReset();
+
+        onSnapshot(doc(db, "users", _USER?._id), (doc) => {
+            dispatch({type: 'SET_USERINFO', payload: { userInfo: {..._USER, ...doc.data()} }});
+        });
     }
 
     useEffect(() => {
