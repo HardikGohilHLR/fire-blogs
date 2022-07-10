@@ -47,6 +47,7 @@
 // Flex Classes
 @mixin flexCenter { display: flex; align-items: center; }
 @mixin flexCenterBetween { display: flex; align-items: center; justify-content: space-between; }
+@mixin flexCenterEnd { display: flex; align-items: center; justify-content: flex-end; }
 @mixin flexBetween { display: flex; justify-content: space-between; }
 @mixin flexCenterCenter { display: flex; align-items: center; justify-content: center; }
 

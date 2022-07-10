@@ -55,6 +55,20 @@
             border-color: $blue;
             color: $blue;
         }
+
+        &.light {
+            background-color: $white;
+            color: $blue;
+            padding: 10px 0;
+            border: none;
+
+            &:hover {
+                background-color: $white;
+                color: $blue;
+                text-decoration: underline;
+            }
+        }
+
     }
 
     &__white {

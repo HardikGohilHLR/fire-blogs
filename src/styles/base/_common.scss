@@ -137,3 +137,48 @@ em { font-style: italic !important; }
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+// Modal
+.fb_modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    
+    &-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba($black, 0.2);
+    }
+
+    &-header {
+        margin-bottom: 20px;
+        @include flexCenterBetween;
+    }
+
+    &-close {
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    &-body {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 5;
+        background-color: $white;
+        max-width: 500px;
+        padding: 20px;
+        width: 100%;
+        border-radius: 6px;
+    }
+
+    &-footer {
+        @include flexCenterEnd;
+    }
+}

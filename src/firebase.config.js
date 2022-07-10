@@ -1,7 +1,7 @@
 // Firebase config
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, orderBy, limit, updateDoc, where } from "firebase/firestore";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
+import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, orderBy, limit, updateDoc, where, onSnapshot } from "firebase/firestore";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, updatePassword, reauthenticateWithCredential, EmailAuthProvider  } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const firebaseConfig = {
@@ -19,9 +19,9 @@ const db = getFirestore(fire);
 const auth = getAuth();
 
 export { 
-    db, collection, getDocs, doc, setDoc, getDoc, auth, 
-    query, orderBy, limit, where, updateDoc,
-    signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut,
+    db, collection, getDocs, doc, setDoc, getDoc, auth,
+    query, orderBy, limit, where, updateDoc, onSnapshot,
+    signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, updatePassword, reauthenticateWithCredential, EmailAuthProvider,
     getStorage, ref, uploadBytes, getDownloadURL
 };
 

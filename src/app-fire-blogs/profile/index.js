@@ -3,6 +3,7 @@
 */
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useFireContext, useFireUpdateContext } from '../fire-context';
 
@@ -11,10 +12,10 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 // Firebase
-import { db, getStorage, ref, uploadBytes, getDownloadURL, doc, updateDoc } from '../../firebase.config';
+import { db, getStorage, ref, uploadBytes, getDownloadURL, doc, updateDoc, onSnapshot } from '../../firebase.config';
 
 import Avatar from '../../components/avatar';
-import { onSnapshot } from 'firebase/firestore';
+import ChangePassword from './components/change-password';
 
 const Profile = () => {
 
@@ -22,10 +23,18 @@ const Profile = () => {
     const dispatch = useFireUpdateContext();
 
     const storage = getStorage();
+    const navigate = useNavigate();
 
     const [formMessages, setFormMessages] = useState('');
     const [isChange, setIsChange] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [popup, setPopup] = useState(false);
+
+    useEffect(() => {
+        if(!_USER?.email) {
+            navigate('/login');
+        }
+    }, [_USER]);
 
     useEffect(() => {
         if(formMessages) {
@@ -78,6 +87,10 @@ const Profile = () => {
         },
     });
 
+    useEffect(() => {
+        setIsChange(formik?.dirty);
+    }, [formik]);
+
     const updateUser = async (values, url = _USER?.profileImage) => {
         await updateDoc(doc(db, "users", _USER?._id), {
             username: values?.username,
@@ -93,14 +106,18 @@ const Profile = () => {
         });
     }
 
-    useEffect(() => {
-        setIsChange(formik?.dirty);
-    }, [formik]);
-
     const handle = {
         change: (e) => { 
             formik.setFieldValue('profileImage', e?.target?.files[0]);
         },
+        changePassword: () => {
+            setPopup(true);
+        }
+    }
+
+    const setPasswordMessages = (data) => {
+        setFormMessages(data);
+        setPopup(false);
     }
 
     return (
@@ -125,8 +142,8 @@ const Profile = () => {
                             {
                                 isChange &&
                                 <div className="fb_button-control fb_flex fb_content-end">
-                                    <button className="fb_btn fb_btn__white small" type="submit">Cancel</button>
-                                    <button className={`fb_btn fb_btn__theme ml-10 ${isLoading ? 'loading' : ''}`} type="submit">Save</button>
+                                    <button className="fb_btn fb_btn__white small" type="button">Cancel</button>
+                                    <button className={`fb_btn fb_btn__theme ml-10 small ${isLoading ? 'loading' : ''}`} type="submit">Save</button>
                                 </div>
                             }
                         </div>
@@ -183,11 +200,20 @@ const Profile = () => {
                             </div>
                             
                         </div>
+                        
 
                     </form>
+                    
+                    <div className="fb_button-control">
+                        <button className={`fb_btn fb_btn__theme light`} type="button" onClick={handle.changePassword}>Change Password</button>
+                    </div>
 
                 </div>
             </div>
+
+            {
+                popup && <ChangePassword close={() => setPopup(false)} setData={setPasswordMessages} />
+            }
         </React.Fragment>
     )
 }
