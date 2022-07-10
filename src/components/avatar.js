@@ -8,7 +8,7 @@ const Avatar = ({user, size}) => {
         <React.Fragment>
             
             <div className="fb_user-avatar" style={{ width: `${size}px`, height: `${size}px` }}>
-                <img src={getUserImage(user?.profileImage)} alt="Placeholder" />
+                <img src={getUserImage(user?.profileImage)} alt="Placeholder" onError={(e) => e.target.src = '/images/placeholder.jpg'} />
             </div>
 
         </React.Fragment>

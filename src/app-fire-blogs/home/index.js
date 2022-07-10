@@ -11,7 +11,7 @@ import { db, collection, getDocs, query, orderBy } from '../../firebase.config';
 
 const Home = () => {
 
-    const [allBlogs, setAllBlogs] = useState([...Array(10).fill('')]);
+    const [allBlogs, setAllBlogs] = useState([]);
     const [dataLoading, setDataLoading] = useState(true);
     
     useEffect(() => {
@@ -44,15 +44,20 @@ const Home = () => {
                     </div>
 
                     {
-                        allBlogs?.length !== 0 ?
+                        (allBlogs?.length !== 0 || dataLoading) ? 
                         <div className="fb_blog-list">
-                            {
-                                allBlogs?.map(blog => {
-                                    return (
-                                        <BlogCard blogData={blog} key={blog?.id} dataLoading={dataLoading} />
-                                    )
-                                })
-                            }
+                        {
+                            dataLoading ?
+                            [...Array(10).fill('')].map((blog, index) => {
+                                return <BlogCard blogData={blog} key={index} dataLoading={dataLoading} />
+                            })
+                            :
+                            allBlogs?.map(blog => {
+                                return (
+                                    <BlogCard blogData={blog} key={blog?.id} dataLoading={dataLoading} />
+                                )
+                            })
+                        }
                         </div>
                         :
                         <h4 className="fb_text-center pb-40 pt-30">No Data Found.</h4>

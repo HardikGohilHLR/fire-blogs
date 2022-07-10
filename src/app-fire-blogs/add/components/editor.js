@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { EditorState, convertToRaw, convertFromHTML, ContentState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
+// import { EditorState, convertToRaw, convertFromHTML, ContentState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 
 import Editor from '@draft-js-plugins/editor';
@@ -20,17 +21,17 @@ const BlogEditor = ({content, onChange}) => {
         setEditorState(content);
     }, [content]);    
 
-    const convert = {
-        convertToHTML: (content) => {
-            const blocksFromHTML = convertFromHTML(content);
-            const state = ContentState.createFromBlockArray(
-                blocksFromHTML.contentBlocks,
-                blocksFromHTML.entityMap,
-            );
+    // const convert = {
+    //     convertToHTML: (content) => {
+    //         const blocksFromHTML = convertFromHTML(content);
+    //         const state = ContentState.createFromBlockArray(
+    //             blocksFromHTML.contentBlocks,
+    //             blocksFromHTML.entityMap,
+    //         );
 
-            return EditorState.createWithContent(state);
-        }
-    }
+    //         return EditorState.createWithContent(state);
+    //     }
+    // }
 
     const handle = {
         change: (e) => {

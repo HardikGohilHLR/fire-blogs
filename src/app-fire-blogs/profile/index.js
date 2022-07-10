@@ -3,7 +3,6 @@
 */
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { useFireContext, useFireUpdateContext } from '../fire-context';
 
@@ -23,7 +22,6 @@ const Profile = () => {
     const dispatch = useFireUpdateContext();
 
     const storage = getStorage();
-    const navigate = useNavigate();
 
     const [formMessages, setFormMessages] = useState('');
     const [isChange, setIsChange] = useState(false);

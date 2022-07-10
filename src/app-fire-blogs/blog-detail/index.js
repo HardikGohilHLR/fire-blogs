@@ -99,7 +99,7 @@ const BlogDetail = () => {
                             dataLoading ?
                             <div className="mt-20">           
                                 {
-                                    [...Array(10)?.fill('')].map((index) => {
+                                    [...Array(10)?.fill('')].map((item, index) => {
                                         return <Skeleton width="100%" height="20px" cn="mb-3" key={index} />
                                     })
                                 }
