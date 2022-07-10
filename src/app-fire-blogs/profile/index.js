@@ -31,12 +31,6 @@ const Profile = () => {
     const [popup, setPopup] = useState(false);
 
     useEffect(() => {
-        if(!_USER?.email) {
-            navigate('/login');
-        }
-    }, [_USER]);
-
-    useEffect(() => {
         if(formMessages) {
             setTimeout(() => {
                 setFormMessages(null)
@@ -101,17 +95,22 @@ const Profile = () => {
         setFormMessages({type: 'success', message: 'Profile Updated successfully!'});
         formik.handleReset();
 
-        onSnapshot(doc(db, "users", _USER?._id), (doc) => {
+        onSnapshot(doc(db, 'users', _USER?._id), (doc) => {
             dispatch({type: 'SET_USERINFO', payload: { userInfo: {..._USER, ...doc.data()} }});
         });
     }
 
     const handle = {
         change: (e) => { 
-            formik.setFieldValue('profileImage', e?.target?.files[0]);
+            formik.setFieldValue('profileImage', e?.target?.files[0] || '');
         },
         changePassword: () => {
             setPopup(true);
+        },
+        cancel: () => {
+            setIsChange(false);
+            formik.setFieldValue('profileImage', '');
+            formik.setFieldValue('username', _USER?.username);
         }
     }
 
@@ -142,20 +141,20 @@ const Profile = () => {
                             {
                                 isChange &&
                                 <div className="fb_button-control fb_flex fb_content-end">
-                                    <button className="fb_btn fb_btn__white small" type="button">Cancel</button>
+                                    <button className="fb_btn fb_btn__white small" type="button" onClick={handle.cancel}>Cancel</button>
                                     <button className={`fb_btn fb_btn__theme ml-10 small ${isLoading ? 'loading' : ''}`} type="submit">Save</button>
                                 </div>
                             }
                         </div>
 
                         <div className="fb_form-image">
+
                             {
-                                formik?.values?.profileImage !== '' ?
+                                formik?.values?.profileImage === '' ? <Avatar user={_USER} size={120} />
+                                :
                                 <div className="fb_form-image-preview">
                                     <img src={URL.createObjectURL(formik?.values?.profileImage)} alt="User" />
                                 </div>
-                                :
-                                <Avatar user={_USER} size={120} />
                             }
 
                             <label htmlFor="profileImage">
