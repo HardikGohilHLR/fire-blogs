@@ -28,9 +28,8 @@ const FireBlogs = () => {
                 <Navbar />
             
                 <div className="fb_content">
-
                     {/* Content */}
-                    <Suspense fallback={<p>loading</p>}>
+                    <Suspense fallback={<div className="fb_preloader"><img src="/images/preloader.svg" /></div>}>
 
                         <Routes>
                             <Route exact path="/" element={<Home />} />

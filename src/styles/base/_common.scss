@@ -126,3 +126,12 @@ em { font-style: italic !important; }
 @keyframes shimmer {
     100% { transform: translateX(100%); }
 }
+
+// Spinner
+.fb_preloader {
+    width: 80px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
