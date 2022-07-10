@@ -1,7 +1,7 @@
 /*
 ** User Profile
 */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 // Packages
 import { useFormik } from 'formik';
@@ -16,13 +16,14 @@ import { useFireContext } from '../fire-context';
 const AddBlog = () => { 
 
     const storage = getStorage();
+    const fileUploadRef = useRef();
 
     const _USER = useFireContext(e => e?.userInfo);
 
     const [isLoading, setIsLoading] = useState(false);
     const [formMessages, setFormMessages] = useState('');
 
-    const [editorState, ] = useState(EditorState.createEmpty());
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
     useEffect(() => {
         if(formMessages) {
@@ -73,9 +74,7 @@ const AddBlog = () => {
   
                     setIsLoading(false);
                     setFormMessages({type: 'success', message: 'Blog added successfully!'});
-                    formik.setFieldValue('content', '');
-                    formik.setFieldValue('image', '');
-                    formik.handleReset();
+                    resetForm();
                 })
                 .catch(error => {
                     setIsLoading(false);
@@ -85,9 +84,16 @@ const AddBlog = () => {
                 setIsLoading(false);
                 setFormMessages({type: 'error', message: error?.message});
             });
-              
         }
     });
+
+    const resetForm = () => {
+        fileUploadRef.current.value = '';
+        setEditorState(EditorState.createEmpty());
+        formik.setFieldValue('content', '');
+        formik.setFieldValue('image', '');
+        formik.handleReset();
+    }
 
     return (
         <React.Fragment>
@@ -139,6 +145,7 @@ const AddBlog = () => {
                                         name="image" 
                                         id="image" 
                                         onChange={handle.uploadImage}
+                                        ref={fileUploadRef}
                                     />                                    
                                 </label>
                                 
