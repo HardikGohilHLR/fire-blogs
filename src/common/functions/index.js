@@ -12,5 +12,5 @@ export const formatDate = (date, format) => {
 
 // Get user image
 export const getUserImage = (image) => {
-    return image || 'https://cdn.icon-icons.com/icons2/1736/PNG/512/4043260-avatar-male-man-portrait_113269.png';
+    return image || '/images/avatar.png';
 }

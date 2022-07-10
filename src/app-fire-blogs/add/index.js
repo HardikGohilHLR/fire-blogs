@@ -11,10 +11,13 @@ import { EditorState } from 'draft-js';
 import BlogEditor from './components/editor';
 
 import { db, getStorage, ref, uploadBytes, getDownloadURL, setDoc, collection, doc } from '../../firebase.config';
+import { useFireContext } from '../fire-context';
 
 const AddBlog = () => { 
 
     const storage = getStorage();
+
+    const _USER = useFireContext(e => e?.userInfo);
 
     const [isLoading, setIsLoading] = useState(false);
     const [formMessages, setFormMessages] = useState('');

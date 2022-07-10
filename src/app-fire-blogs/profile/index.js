@@ -52,32 +52,40 @@ const Profile = () => {
 
             setIsLoading(true);
 
-            const storageRef = ref(storage, `images/${values?.profileImage?.name}`);
-            uploadBytes(storageRef, values?.profileImage).then(() => {
-                setIsLoading(true);
-
-                getDownloadURL(ref(storage, `images/${values?.profileImage?.name}`))
-                .then(async (url) => {
-                    await updateDoc(doc(db, "users", _USER?._id), {
-                        username: values?.username,
-                        profileImage: url
+            if(values?.profileImage) {
+                const storageRef = ref(storage, `images/${values?.profileImage?.name}`);
+                uploadBytes(storageRef, values?.profileImage).then(() => {
+                    setIsLoading(true);
+    
+                    getDownloadURL(ref(storage, `images/${values?.profileImage?.name}`))
+                    
+                    .then(async (url) => {
+                        updateUser(values, url);
+                    })
+                    .catch(error => {
+                        setIsLoading(false);
+                        setFormMessages({type: 'error', message: error?.message});
                     });
-  
-                    setIsLoading(false);
-                    setFormMessages({type: 'success', message: 'Profile Updated successfully!'});
-                    formik.handleReset();
-                })
-                .catch(error => {
+                }).catch(error => {
                     setIsLoading(false);
                     setFormMessages({type: 'error', message: error?.message});
                 });
-            }).catch(error => {
-                setIsLoading(false);
-                setFormMessages({type: 'error', message: error?.message});
-            });
-              
+            } else {
+                updateUser(values);
+            }
         },
     });
+
+    const updateUser = async (values, url = _USER?.profileImage) => {
+        await updateDoc(doc(db, "users", _USER?._id), {
+            username: values?.username,
+            profileImage: url
+        });
+
+        setIsLoading(false);
+        setFormMessages({type: 'success', message: 'Profile Updated successfully!'});
+        formik.handleReset();
+    }
 
     useEffect(() => {
         setIsChange(formik?.dirty);

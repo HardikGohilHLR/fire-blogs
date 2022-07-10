@@ -19,7 +19,7 @@ const App = () => {
 
             const result = await getDocs(queryResult);
             result.forEach((doc) => {
-                dispatch({type: 'SET_USERINFO', payload: { userInfo: {...user, userId: doc.id, ...doc.data()} }});
+                dispatch({type: 'SET_USERINFO', payload: { userInfo: {...user, recordId: doc.id, ...doc.data()} }});
             });
         });
     }, [dispatch]);
