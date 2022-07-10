@@ -1,7 +1,7 @@
 /*
 ** Blog Card
 */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { formatDate } from '../common/functions';
@@ -9,11 +9,27 @@ import { formatDate } from '../common/functions';
 import Avatar from './avatar';
 import Skeleton from './skeleton';
 
+import { getDoc, doc, db } from '../firebase.config';
+
 const BlogCard = ({blogData, dataLoading}) => {  
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    const [user,] = useState({});
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+        blogData?.user && getUser();
+    }, [blogData?.user]);
+    
+    const getUser = async () => {
+
+        const usersRef = doc(db, 'users', blogData?.user);
+        const docSnap = await getDoc(usersRef);
+        
+        if (docSnap.exists()) {
+            setUser(docSnap.data());
+        }
+    }
     
     const viewBlog = () => {
         navigate(`/blog/${blogData?.id}`);

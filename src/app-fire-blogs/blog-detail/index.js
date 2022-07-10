@@ -19,6 +19,7 @@ const BlogDetail = () => {
 
     const [blog, setBlog] = useState('');
     const [dataLoading, setDataLoading] = useState(true);
+    const [user, setUser] = useState({});
 
     useEffect(() => {
         getBlogDetail();
@@ -27,14 +28,22 @@ const BlogDetail = () => {
     const getBlogDetail = async () => {
         const blogsRef = doc(db, 'blogs', id);
         const docSnap = await getDoc(blogsRef);
-
+        
         if (docSnap.exists()) {
             setBlog(docSnap.data());
-            setDataLoading(false);
+            setDataLoading(false); 
+            getUser(docSnap.data()?.user);
         }
     }
 
-    const user = '';
+    const getUser = async (user) => { 
+        const usersRef = doc(db, 'users', user);
+        const docSnap = await getDoc(usersRef);
+        
+        if (docSnap.exists()) {
+            setUser(docSnap.data());
+        }
+    }
 
     return (
         <React.Fragment>            
@@ -79,7 +88,7 @@ const BlogDetail = () => {
                                     </div>
                                     :
                                 <div className="fb_blog-post__author-info">
-                                    <h4>{user?.username || 'John Doe'}</h4>
+                                    <h4>{user?.username}</h4>
                                     <span> { formatDate(blog?.date?.toDate(), 'ddd, MMM Do, YYYY') } </span>
                                 </div>
                             }

@@ -68,6 +68,7 @@ const AddBlog = () => {
                         content: values?.content,
                         image: url,
                         date: new Date(),
+                        user: _USER?._id
                     });
   
                     setIsLoading(false);
