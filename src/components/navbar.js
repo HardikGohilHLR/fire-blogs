@@ -40,7 +40,7 @@ const Navbar = () => {
 
                         <div className="fb_header-logo">
                             <Link to="/">
-                                <img src="/images/fireblogs.svg" alt="Fireblogs" title="Fireblogs"/>    
+                                <img src="/images/fireblogs_dark.svg" alt="Fireblogs" title="Fireblogs"/>    
                             </Link> 
                         </div>
                         
