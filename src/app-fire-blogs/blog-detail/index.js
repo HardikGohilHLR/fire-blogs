@@ -22,19 +22,20 @@ const BlogDetail = () => {
     const [user, setUser] = useState({});
 
     useEffect(() => {
+
+        const getBlogDetail = async () => {
+            const blogsRef = doc(db, 'blogs', id);
+            const docSnap = await getDoc(blogsRef);
+            
+            if (docSnap.exists()) {
+                setBlog(docSnap.data());
+                setDataLoading(false); 
+                getUser(docSnap.data()?.user);
+            }
+        }
+
         getBlogDetail();
     }, [id]);
-
-    const getBlogDetail = async () => {
-        const blogsRef = doc(db, 'blogs', id);
-        const docSnap = await getDoc(blogsRef);
-        
-        if (docSnap.exists()) {
-            setBlog(docSnap.data());
-            setDataLoading(false); 
-            getUser(docSnap.data()?.user);
-        }
-    }
 
     const getUser = async (user) => { 
         const usersRef = doc(db, 'users', user);

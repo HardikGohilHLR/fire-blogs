@@ -25,7 +25,7 @@ const Signup = () => {
         if(_USER?.email) {
             navigate('/');
         }
-    }, [_USER]);
+    }, [_USER, navigate]);
 
     useEffect(() => {
         if(formMessages) {

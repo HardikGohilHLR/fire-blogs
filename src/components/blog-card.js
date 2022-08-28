@@ -18,23 +18,24 @@ const BlogCard = ({blogData, dataLoading}) => {
     const [user, setUser] = useState({});
 
     useEffect(() => {
+        
+        const getUser = async () => {
+
+            const usersRef = doc(db, 'users', blogData?.user);
+            const docSnap = await getDoc(usersRef);
+            
+            if (docSnap.exists()) {
+                setUser(docSnap.data());
+            }
+        }
+        
         blogData?.user && getUser();
     }, [blogData?.user]);
-    
-    const getUser = async () => {
 
-        const usersRef = doc(db, 'users', blogData?.user);
-        const docSnap = await getDoc(usersRef);
-        
-        if (docSnap.exists()) {
-            setUser(docSnap.data());
-        }
-    }
-    
     const viewBlog = () => {
         navigate(`/blog/${blogData?.id}`);
     }
-    
+
     return (
         <React.Fragment>
             <div className="fb_blog-post" onClick={() => !dataLoading && viewBlog()}>

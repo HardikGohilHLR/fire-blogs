@@ -33,7 +33,7 @@ const Login = () => {
         if(_USER?.email) {
             navigate('/');
         }
-    }, [_USER]);
+    }, [_USER, navigate]);
 
     const formik = useFormik({
         initialValues: {

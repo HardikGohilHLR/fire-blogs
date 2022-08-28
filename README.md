@@ -5,7 +5,7 @@
 
 A Blog application where user can add and view blogs, Can register and login into the app. We have used firebase for authentication and application is deployed on netlify platform.
 
-Live - **[FireBlogs](https://fireblogs-react.netlify.app/)**
+### Live - **[FireBlogs](https://fireblogs-react.netlify.app/)**
 
 ### Features
 * Firebase Authentication for Regster and login into the app
